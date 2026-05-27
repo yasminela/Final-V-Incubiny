@@ -3,6 +3,7 @@ import api from '../utils/api';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../composants/Navbar';
 import Calendrier from '../composants/Calendrier';
+import GestionMentors from '../composants/GestionMentors';
 import CreationPorteur from '../composants/CreationPorteur';
 import EnvoiTache from '../composants/EnvoiTache';
 import ModifierPorteur from '../composants/ModifierPorteur';
@@ -20,7 +21,7 @@ import {
   faChartLine, faUsers, faBuilding, faFileAlt, faEye, 
   faUserPlus, faPaperPlane, faTasks, faUserCircle, 
   faExclamationTriangle, faEdit, faTrash, faCheck, faTimes,
-  faTachometerAlt, faSpinner
+  faTachometerAlt, faSpinner, faGraduationCap
 } from '@fortawesome/free-solid-svg-icons';
 
 function TableauBordAdmin({ user, onLogout }) {
@@ -428,6 +429,7 @@ function TableauBordAdmin({ user, onLogout }) {
 
         <EarlyStageTimeline />
 
+        {/* Tabs Container */}
         <div style={styles.tabsContainer}>
           <button className="btn-shine" style={styles.tab(activeTab === 'dashboard')} onClick={() => setActiveTab('dashboard')}>
             <FontAwesomeIcon icon={faTachometerAlt} /> Tableau de bord
@@ -447,8 +449,12 @@ function TableauBordAdmin({ user, onLogout }) {
           <button className="btn-shine" style={styles.tab(activeTab === 'scores')} onClick={() => setActiveTab('scores')}>
             <FontAwesomeIcon icon={faChartLine} /> Scores
           </button>
+          <button className="btn-shine" style={styles.tab(activeTab === 'mentors')} onClick={() => setActiveTab('mentors')}>
+            <FontAwesomeIcon icon={faGraduationCap} /> Mentors
+          </button>
         </div>
 
+        {/* Dashboard Tab */}
         {activeTab === 'dashboard' && (
           <>
             <div style={styles.statsContainer}>
@@ -483,6 +489,7 @@ function TableauBordAdmin({ user, onLogout }) {
           </>
         )}
 
+        {/* Porteurs Tab */}
         {activeTab === 'porteurs' && (
           <div style={styles.infoCard}>
             <div style={styles.sectionTitle}>
@@ -526,6 +533,7 @@ function TableauBordAdmin({ user, onLogout }) {
           </div>
         )}
 
+        {/* Projets Tab */}
         {activeTab === 'projets' && (
           <div style={styles.infoCard}>
             <div style={styles.sectionTitle}>
@@ -552,13 +560,23 @@ function TableauBordAdmin({ user, onLogout }) {
           </div>
         )}
 
+        {/* Soumissions Tab */}
         {activeTab === 'soumissions' && <ValidationDocument onValidate={loadAllData} />}
+        
+        {/* Analyses IA Tab */}
         {activeTab === 'analyses' && <AdminAnalysesIA />}
+        
+        {/* Scores Tab */}
         {activeTab === 'scores' && <ScoresPorteurs />}
+        
+        {/* Mentors Tab */}
+        {activeTab === 'mentors' && <GestionMentors />}
+
       </div>
 
       <PiedDePage />
 
+      {/* Modals */}
       {showCreationPorteur && (
         <CreationPorteur 
           onClose={() => setShowCreationPorteur(false)} 

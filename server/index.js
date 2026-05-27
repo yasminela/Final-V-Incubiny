@@ -37,6 +37,8 @@ import notificationRoutes from './routes/notifications.js';
 import iaRoutes from './routes/ai.js';
 import soumissionRoutes from './routes/soumissions.js';
 import profilRoutes from './routes/profil.js';
+import mentorRoutes from './routes/mentors.js';
+
 
 // Routes API
 app.use('/api/auth', authRoutes);
@@ -50,6 +52,8 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai', iaRoutes);
 app.use('/api/soumissions', soumissionRoutes);
 app.use('/api/profil', profilRoutes);
+app.use('/api/mentors', mentorRoutes);
+
 
 // Health check
 app.get('/api/health', (req, res) => {

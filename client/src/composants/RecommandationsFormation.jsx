@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faGraduationCap, faLightbulb, faUser, faCheck, 
   faTimes, faSpinner, faStar, faChartLine, faRobot,
-  faCalendar, faClock, faMapMarkerAlt
+  faCalendar, faClock, faMapMarkerAlt, faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 
 function RecommandationsFormation({ porteurId, onClose }) {
@@ -43,11 +43,9 @@ function RecommandationsFormation({ porteurId, onClose }) {
         setPorteur(porteurRes.data);
       } catch (error) {
         console.error('Erreur chargement porteur:', error);
-        // Utiliser les infos de l'analyse si disponible
         if (dernier?.porteurId) {
           setPorteur(dernier.porteurId);
         } else {
-          // Créer un objet porteur minimal
           setPorteur({ firstName: 'Porteur', lastName: '', email: '' });
         }
       }

@@ -17,40 +17,55 @@ router.get('/mes-notifications', auth, async (req, res) => {
   }
 });
 
-// Marquer comme lue
+// server/routes/notifications.js - Vérifier ces routes
+
+// Marquer une notification comme lue
 router.put('/:id/lire', auth, async (req, res) => {
+  console.log('📥 PUT /notifications/:id/lire appelé');
+  console.log('📝 ID:', req.params.id);
+  console.log('👤 Utilisateur:', req.user.id);
+  
   try {
-    const notif = await Notification.findByIdAndUpdate(
-      req.params.id, 
-      { estLue: true }, 
+    const notification = await Notification.findOneAndUpdate(
+      { _id: req.params.id, utilisateurId: req.user.id },
+      { estLue: true },
       { new: true }
     );
     
-    if (!notif) {
+    if (!notification) {
+      console.log('❌ Notification non trouvée');
       return res.status(404).json({ message: 'Notification non trouvée' });
     }
     
-    res.json(notif);
+    console.log('✅ Notification marquée comme lue');
+    res.json(notification);
   } catch (error) {
-    console.error('Erreur marquage lecture:', error);
+    console.error('❌ Erreur:', error);
     res.status(500).json({ message: error.message });
   }
 });
 
-// Tout marquer comme lu
-router.put('/tout-lire', auth, async (req, res) => {
+// Marquer toutes les notifications comme lues
+router.put('/marquer-tout-lu', auth, async (req, res) => {
+  console.log('📥 PUT /notifications/marquer-tout-lu appelé');
+  console.log('👤 Utilisateur:', req.user.id);
+  
   try {
-    await Notification.updateMany(
+    const result = await Notification.updateMany(
       { utilisateurId: req.user.id, estLue: false },
       { estLue: true }
     );
-    res.json({ message: 'Toutes les notifications ont été marquées comme lues' });
+    
+    console.log(`✅ ${result.modifiedCount} notification(s) marquée(s) comme lue(s)`);
+    res.json({ 
+      message: 'Toutes les notifications ont été marquées comme lues',
+      modifiedCount: result.modifiedCount 
+    });
   } catch (error) {
-    console.error('Erreur marquage tout lu:', error);
+    console.error('❌ Erreur:', error);
     res.status(500).json({ message: error.message });
   }
 });
-
 // ==================== ROUTE AJOUTÉE ====================
 // Envoyer des recommandations de formations au porteur (admin)
 router.post('/envoyer-recommandations', auth, isAdmin, async (req, res) => {

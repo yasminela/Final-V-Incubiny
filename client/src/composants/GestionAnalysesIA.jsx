@@ -8,7 +8,8 @@ import {
   faDownload, faFileAlt, faRobot, faUserCheck,
   faCalendar, faClock, faStar, faTrophy,
   faUpload, faFilePdf, faCheck, faTimes,
-  faArrowRight, faThumbsUp, faExclamationTriangle
+  faArrowRight, faThumbsUp, faExclamationTriangle,
+  faGraduationCap
 } from '@fortawesome/free-solid-svg-icons';
 
 function GestionAnalysesIA() {
@@ -24,6 +25,7 @@ function GestionAnalysesIA() {
   const [uploading, setUploading] = useState(false);
   const [analyseResult, setAnalyseResult] = useState(null);
   const [showAnalyseModal, setShowAnalyseModal] = useState(false);
+  const [mentorsRecommandes, setMentorsRecommandes] = useState([]);
 
   useEffect(() => {
     loadAnalyses();
@@ -71,6 +73,7 @@ function GestionAnalysesIA() {
 
       if (res.data.success) {
         setAnalyseResult(res.data);
+        setMentorsRecommandes(res.data.mentorsRecommandes || []);
         setShowAnalyseModal(true);
         setSelectedFile(null);
         loadAnalyses();
@@ -122,6 +125,13 @@ function GestionAnalysesIA() {
     });
     
     return sections;
+  };
+
+  const getNiveauStars = (niveau) => {
+    if (!niveau) niveau = 0;
+    const fullStars = Math.min(5, Math.max(0, niveau));
+    const emptyStars = 5 - fullStars;
+    return '★'.repeat(fullStars) + '☆'.repeat(emptyStars);
   };
 
   const styles = {
@@ -254,7 +264,7 @@ function GestionAnalysesIA() {
       background: darkMode ? '#1e293b' : 'white',
       borderRadius: '24px',
       padding: '28px',
-      maxWidth: '650px',
+      maxWidth: '700px',
       width: '90%',
       maxHeight: '85vh',
       overflowY: 'auto'
@@ -327,6 +337,18 @@ function GestionAnalysesIA() {
       alignItems: 'flex-start',
       gap: '10px'
     },
+    mentorCard: {
+      padding: '12px 16px',
+      marginBottom: '10px',
+      background: darkMode ? '#0f172a' : '#f8fafc',
+      borderRadius: '12px',
+      border: `1px solid ${darkMode ? '#334155' : '#e2e8f0'}`,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '12px'
+    },
     closeBtn: {
       width: '100%',
       padding: '14px',
@@ -342,6 +364,17 @@ function GestionAnalysesIA() {
   };
 
   const scoreLevel = analyseResult ? getScoreLevel(analyseResult.scoreImpact) : null;
+
+  if (loading) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.emptyState}>
+          <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+          <p>Chargement des analyses...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.container}>
@@ -396,12 +429,7 @@ function GestionAnalysesIA() {
         Historique des analyses
       </div>
 
-      {loading ? (
-        <div style={styles.emptyState}>
-          <FontAwesomeIcon icon={faSpinner} spin size="2x" />
-          <p>Chargement des analyses...</p>
-        </div>
-      ) : analyses.length === 0 ? (
+      {analyses.length === 0 ? (
         <div style={styles.emptyState}>
           <FontAwesomeIcon icon={faChartLine} size="48px" style={{ opacity: 0.3, marginBottom: '16px' }} />
           <p>Aucune analyse effectuée pour le moment</p>
@@ -425,13 +453,13 @@ function GestionAnalysesIA() {
         ))
       )}
 
-      {/* MODAL RÉSULTAT ANALYSE */}
+      {/* MODAL RÉSULTAT ANALYSE AVEC MENTORS */}
       {showAnalyseModal && analyseResult && (
         <div style={styles.modalOverlay} onClick={() => setShowAnalyseModal(false)}>
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div style={styles.modalTitle}>
               <FontAwesomeIcon icon={faRobot} color="#667eea" />
-               Résultat de l'analyse
+              🤖 Résultat de l'analyse
             </div>
 
             <div style={{ ...styles.scoreContainer, background: getScoreColor(analyseResult.scoreImpact) + '15' }}>
@@ -468,12 +496,53 @@ function GestionAnalysesIA() {
                   <FontAwesomeIcon icon={faLightbulb} color="#f59e0b" />
                   Recommandations personnalisées
                 </div>
-                {analyseResult.recommandations.map((rec, i) => (
+                {analyseResult.recommandations.slice(0, 5).map((rec, i) => (
                   <div key={i} style={styles.recommandationCard}>
                     <FontAwesomeIcon icon={faArrowRight} color="#f59e0b" />
                     <span>{rec}</span>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {/* 🌟 SECTION MENTORS RECOMMANDÉS 🌟 */}
+            {mentorsRecommandes.length > 0 && (
+              <div style={{ marginTop: '24px' }}>
+                <div style={styles.feedbackTitle}>
+                  <FontAwesomeIcon icon={faGraduationCap} color="#8b5cf6" />
+                  🎯 Mentors recommandés pour améliorer votre BMC
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {mentorsRecommandes.map((mentor, idx) => (
+                    <div key={idx} style={styles.mentorCard}>
+                      <div>
+                        <div style={{ fontWeight: 'bold', fontSize: '15px' }}>
+                          {mentor.firstName} {mentor.lastName}
+                        </div>
+                        <div style={{ fontSize: '12px', marginTop: '4px' }}>
+                          <FontAwesomeIcon icon={faStar} style={{ color: '#f59e0b', marginRight: '4px' }} />
+                          Compatibilité: {mentor.scoreCompatibilite}%
+                        </div>
+                        {mentor.domainesPertinents && mentor.domainesPertinents.length > 0 && (
+                          <div style={{ fontSize: '11px', marginTop: '4px', color: darkMode ? '#94a3b8' : '#64748b' }}>
+                            Expert en: {mentor.domainesPertinents.map(d => 
+                              d === 'propositionValeur' ? 'Proposition de valeur' : 
+                              d === 'segmentsClients' ? 'Segments clients' :
+                              d === 'fluxRevenus' ? 'Flux de revenus' : 
+                              d === 'structureCouts' ? 'Structure de coûts' : d
+                            ).join(', ')}
+                          </div>
+                        )}
+                      </div>
+                      <div style={{ fontSize: '13px', color: '#f59e0b' }}>
+                        {getNiveauStars(mentor.expertiseBMC?.niveauGlobal || 0)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ fontSize: '12px', color: darkMode ? '#64748b' : '#94a3b8', marginTop: '12px', textAlign: 'center' }}>
+                  💡 Ces mentors sont disponibles pour vous accompagner dans l'amélioration de votre Business Model Canvas
+                </div>
               </div>
             )}
 
@@ -484,7 +553,7 @@ function GestionAnalysesIA() {
         </div>
       )}
 
-      {/* MODAL DÉTAILS ANALYSE EXISTANTE */}
+      {/* MODAL DÉTAILS ANALYSE EXISTANTE AVEC MENTORS */}
       {showDetailsModal && selectedDetails && (
         <div style={styles.modalOverlay} onClick={() => setShowDetailsModal(false)}>
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -527,7 +596,7 @@ function GestionAnalysesIA() {
                   <FontAwesomeIcon icon={faLightbulb} color="#f59e0b" />
                   Recommandations
                 </div>
-                {selectedDetails.recommandations.map((rec, i) => (
+                {selectedDetails.recommandations.slice(0, 8).map((rec, i) => (
                   <div key={i} style={styles.recommandationCard}>
                     <FontAwesomeIcon icon={faArrowRight} color="#f59e0b" />
                     <span>{rec}</span>
