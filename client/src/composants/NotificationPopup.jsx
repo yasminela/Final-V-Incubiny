@@ -54,7 +54,7 @@ function NotificationPopup() {
           n._id === id ? { ...n, estLue: true } : n
         ));
         setUnreadCount(prev => Math.max(0, prev - 1));
-        console.log('✅ Notification marquée comme lue:', id);
+        console.log('Toutes les notifications marquées comme lues');
       }
     } catch (error) {
       console.error('Erreur marquage:', error);
@@ -72,7 +72,7 @@ function NotificationPopup() {
       if (response.data) {
         setNotifications(prev => prev.map(n => ({ ...n, estLue: true })));
         setUnreadCount(0);
-        console.log('✅ Toutes les notifications marquées comme lues');
+        console.log('Toutes les notifications marquées comme lues');
       }
     } catch (error) {
       console.error('Erreur marquage tout:', error);

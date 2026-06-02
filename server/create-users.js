@@ -117,7 +117,7 @@ const users = [
 async function createUsers() {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ Connecté à MongoDB Atlas\n');
+    console.log('Connecté à MongoDB Atlas\n');
     
     for (const user of users) {
       const existing = await User.findOne({ email: user.email });
@@ -128,22 +128,22 @@ async function createUsers() {
           { email: user.email },
           { $set: { ...user, password: hashedPassword } }
         );
-        console.log(`✅ Mis à jour: ${user.email} (${user.role})`);
+        console.log(`Mis à jour: ${user.email} (${user.role})`);
       } else {
         const newUser = new User({ ...user, password: hashedPassword });
         await newUser.save();
-        console.log(`✅ Créé: ${user.email} (${user.role})`);
+        console.log(`Créé: ${user.email} (${user.role})`);
       }
     }
     
-    console.log('\n🎉 Tous les utilisateurs ont été créés !');
-    console.log('\n📋 Identifiants:');
+    console.log('\n Tous les utilisateurs ont été créés !');
+    console.log('\n Identifiants:');
     console.log('   Admin: admin@incubiny.com / admin123');
     console.log('   Souha: Ellafisouha@outlook.com / Incusouha949biny');
     
     process.exit(0);
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error(' Erreur:', error);
     process.exit(1);
   }
 }

@@ -33,36 +33,36 @@ function CreerProjet({ projetExistant, onClose, onSuccess }) {
         await api.put(`/projets/${projetExistant._id}`, {
           titre, description, secteur, budget
         });
-        alert('✅ Projet modifié avec succès !');
+        alert(' Projet modifié avec succès !');
       } else {
         // Créer un nouveau projet
         await api.post('/projets', {
           titre, description, secteur, budget
         });
-        alert('✅ Projet créé avec succès !');
+        alert(' Projet créé avec succès !');
       }
       if (onSuccess) onSuccess();
       onClose();
     } catch (error) {
       console.error('Erreur:', error);
-      alert('❌ Erreur: ' + (error.response?.data?.message || error.message));
+      alert(' Erreur: ' + (error.response?.data?.message || error.message));
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.')) return;
+    if (!confirm(' Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.')) return;
     
     setLoading(true);
     try {
       await api.delete(`/projets/${projetExistant._id}`);
-      alert('✅ Projet supprimé avec succès !');
+      alert(' Projet supprimé avec succès !');
       if (onSuccess) onSuccess();
       onClose();
     } catch (error) {
       console.error('Erreur:', error);
-      alert('❌ Erreur lors de la suppression');
+      alert(' Erreur lors de la suppression');
     } finally {
       setLoading(false);
     }
@@ -161,7 +161,7 @@ function CreerProjet({ projetExistant, onClose, onSuccess }) {
     <div style={styles.modalOverlay} onClick={onClose}>
       <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div style={styles.title}>
-          {isEditing ? '✏️ Modifier le projet' : '🚀 Nouveau projet'}
+          {isEditing ? ' Modifier le projet' : ' Nouveau projet'}
         </div>
         
         <form onSubmit={handleSubmit}>

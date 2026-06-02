@@ -292,13 +292,13 @@ function EarlyStageTimeline() {
           Programme Early Stage
         </div>
         <div>
-          <span style={styles.badge}>🎓 6 mois d'accompagnement intensif</span>
+          <span style={styles.badge}> 6 mois d'accompagnement intensif</span>
         </div>
         <div style={styles.objectifFinal}>
-          🎯 Objectif final : Décrocher le label Startup ACT
+           Objectif final : Décrocher le label Startup ACT
         </div>
       </div>
-
+      
       <div style={styles.grid}>
         {etapesProgramme.map((etape) => (
           <div 

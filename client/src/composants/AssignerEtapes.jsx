@@ -66,7 +66,7 @@ function AssignerEtapes({ onClose, onSuccess }) {
       });
       
       setMessageType('success');
-      setMessage(`✅ ${etapesEarlyStage.length} étapes assignées avec succès !`);
+      setMessage(` ${etapesEarlyStage.length} étapes assignées avec succès !`);
       
       if (onSuccess) onSuccess();
       setTimeout(() => onClose(), 2000);
@@ -313,7 +313,7 @@ function AssignerEtapes({ onClose, onSuccess }) {
             {etapesEarlyStage.map((e, idx) => (
               <div key={idx} style={styles.etapeItem}>
                 <span style={styles.etapeMois}>Mois {e.mois}</span>
-                <span>📌 {e.titre}</span>
+                <span> {e.titre}</span>
                 <span style={{ fontSize: '11px', opacity: 0.7 }}>({e.description})</span>
               </div>
             ))}

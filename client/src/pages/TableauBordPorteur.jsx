@@ -127,23 +127,23 @@ function TableauBordPorteur({ user, onLogout }) {
   };
 
   const handleDeleteProjet = async (projetId) => {
-    if (!confirm('⚠️ Êtes-vous sûr de vouloir supprimer ce projet ?')) return;
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) return;
     
     try {
       await api.delete(`/projets/${projetId}`);
-      showToastMessage('success', '✅ Projet supprimé');
+      showToastMessage('success', 'Projet supprimé');
       await Promise.all([loadData(), loadSoumissions()]);
     } catch (error) {
       console.error('Erreur suppression:', error);
-      showToastMessage('error', '❌ Erreur lors de la suppression');
+      showToastMessage('error', 'Erreur lors de la suppression');
     }
   };
 
   const getStatutBadge = (statut) => {
     const badges = {
-      en_attente: { background: '#fef3c7', color: '#d97706', text: '⏳ En attente', icon: faExclamationTriangle },
-      valide: { background: '#d1fae5', color: '#059669', text: '✅ Validé', icon: faCheck },
-      rejete: { background: '#fee2e2', color: '#dc2626', text: '❌ Rejeté', icon: faTimes }
+      en_attente: { background: '#fef3c7', color: '#d97706', text: 'En attente', icon: faExclamationTriangle },
+      valide: { background: '#d1fae5', color: '#059669', text: 'Validé', icon: faCheck },
+      rejete: { background: '#fee2e2', color: '#dc2626', text: 'Rejeté', icon: faTimes }
     };
     const b = badges[statut] || badges.en_attente;
     return (
@@ -549,9 +549,9 @@ function TableauBordPorteur({ user, onLogout }) {
                 <div style={styles.progressionFill} />
               </div>
               <div style={styles.progressionText}>
-                {stats.progression === 0 ? '🚀 Commencez votre parcours !' : 
-                 stats.progression === 100 ? '🎉 Félicitations ! Programme terminé !' : 
-                 `📈 Continuez, vous êtes à ${stats.progression}%`}
+                {stats.progression === 0 ? 'Commencez votre parcours !' : 
+                 stats.progression === 100 ? 'Félicitations ! Programme terminé !' : 
+                 `Continuez, vous êtes à ${stats.progression}%`}
               </div>
             </div>
 
@@ -564,7 +564,7 @@ function TableauBordPorteur({ user, onLogout }) {
               </div>
               {projets.length === 0 ? (
                 <div style={styles.emptyState}>
-                  <p>📭 Aucun projet</p>
+                  <p>Aucun projet</p>
                   <button className="btn-shine" onClick={() => setShowCreerProjet(true)} style={{ ...styles.btnEdit, marginTop: '16px' }}>
                     <FontAwesomeIcon icon={faPlus} /> Créer mon premier projet
                   </button>
@@ -576,7 +576,7 @@ function TableauBordPorteur({ user, onLogout }) {
                       <div style={styles.projetTitre}>{p.titre || p.nomProjet}</div>
                       <div style={styles.projetDescription}>{p.description || '—'}</div>
                       <div style={styles.projetMeta}>
-                        <span>📂 {p.secteur || 'Non spécifié'}</span>
+                        <span>{p.secteur || 'Non spécifié'}</span>
                         {p.budget && <span>💰 {p.budget.toLocaleString()} €</span>}
                         <span>{getStatutBadge(p.statut)}</span>
                       </div>
@@ -629,7 +629,7 @@ function TableauBordPorteur({ user, onLogout }) {
       {showCreerProjet && (
         <CreerProjet 
           onClose={() => setShowCreerProjet(false)} 
-          onSuccess={() => { loadData(); showToastMessage('success', '✅ Projet créé !'); }} 
+          onSuccess={() => { loadData(); showToastMessage('success', 'Projet créé !'); }} 
         />
       )}
 
@@ -637,10 +637,10 @@ function TableauBordPorteur({ user, onLogout }) {
         <CreerProjet 
           projetExistant={selectedProjet}
           onClose={() => { setShowEditProjet(false); setSelectedProjet(null); }} 
-          onSuccess={() => { loadData(); showToastMessage('success', '✅ Projet modifié !'); }} 
+          onSuccess={() => { loadData(); showToastMessage('success', 'Projet modifié !'); }} 
         />
       )}
-
+      
       {toast && <ToastNotification type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
       
     </div>

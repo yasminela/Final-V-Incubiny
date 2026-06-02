@@ -9,7 +9,7 @@ export const calculerScoreProfil = async (porteurId) => {
   const porteur = await Utilisateur.findById(porteurId);
   if (!porteur) return 0;
   
-  let score = 0;  // ✅ Démarre à 0%
+  let score = 0;  // Démarre à 0%
   
   // 1. Informations personnelles (20% total - 5% chacun)
   if (porteur.firstName && porteur.firstName !== '') score += 5;
@@ -134,7 +134,7 @@ export const verifierProfilsIncomplets = async () => {
     if (score < 30) {
       await Notification.create({
         utilisateurId: porteur._id,
-        titre: "📝 Commencez à soumettre vos documents",
+        titre: "Commencez à soumettre vos documents",
         message: `Votre profil est complété à ${score}%. Soumettez vos premiers documents pour augmenter votre score.`,
         type: 'info',
         estLue: false,
@@ -146,7 +146,7 @@ export const verifierProfilsIncomplets = async () => {
       for (const admin of admins) {
         await Notification.create({
           utilisateurId: admin._id,
-          titre: "⚠️ Nouveau porteur inactif",
+          titre: "Nouveau porteur inactif",
           message: `${porteur.firstName} ${porteur.lastName} n'a encore soumis aucun document.`,
           type: 'warning',
           estLue: false,

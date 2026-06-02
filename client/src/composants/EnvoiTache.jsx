@@ -27,17 +27,17 @@ function EnvoiTache({ onClose, onSuccess }) {
       console.error('Erreur:', error);
     }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await api.post('/taches', formData);
-      alert('✅ Tâche envoyée avec succès');
+      alert(' Tâche envoyée avec succès');
       if (onSuccess) onSuccess();
       onClose();
     } catch (error) {
-      alert('❌ Erreur: ' + (error.response?.data?.message || error.message));
+      alert(' Erreur: ' + (error.response?.data?.message || error.message));
     } finally {
       setLoading(false);
     }

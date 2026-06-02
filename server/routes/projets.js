@@ -67,7 +67,7 @@ router.post('/', auth, async (req, res) => {
     for (const admin of admins) {
       await Notification.create({
         utilisateurId: admin._id,
-        titre: '📋 Nouveau projet en attente',
+        titre: 'Nouveau projet en attente',
         message: `Le porteur ${req.user.firstName} ${req.user.lastName} a soumis un nouveau projet : ${projet.titre}`,
         type: 'info',
         estLue: false,
@@ -177,7 +177,7 @@ router.put('/valider/:id', auth, isAdmin, async (req, res) => {
 
     await Notification.create({
       utilisateurId: projet.porteurId._id,
-      titre: '✅ Projet validé',
+      titre: 'Projet validé',
       message: `Votre projet "${projet.titre}" a été validé.${feedback ? ` Feedback: ${feedback}` : ''}`,
       type: 'succes',
       estLue: false,
@@ -216,7 +216,7 @@ router.put('/rejeter/:id', auth, isAdmin, async (req, res) => {
     
     await Notification.create({
       utilisateurId: projet.porteurId._id,
-      titre: '❌ Projet non retenu',
+      titre: 'Projet non retenu',
       message: `Votre projet "${projet.titre}" n'a pas été retenu. Feedback: ${feedback}`,
       type: 'erreur',
       estLue: false,

@@ -3,7 +3,6 @@ import api from '../utils/api';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../composants/Navbar';
 import Calendrier from '../composants/Calendrier';
-import GestionMentors from '../composants/GestionMentors';
 import CreationPorteur from '../composants/CreationPorteur';
 import EnvoiTache from '../composants/EnvoiTache';
 import ModifierPorteur from '../composants/ModifierPorteur';
@@ -114,14 +113,14 @@ function TableauBordAdmin({ user, onLogout }) {
   };
 
   const handleDeletePorteur = async (id) => {
-    if (!window.confirm('⚠️ Supprimer ce porteur ?')) return;
+    if (!window.confirm('Supprimer ce porteur ?')) return;
     
     try {
       await api.delete(`/utilisateurs/${id}`);
       await loadAllData();
-      showToastMessage('success', '✅ Porteur supprimé');
+      showToastMessage('success', 'Porteur supprimé');
     } catch (error) {
-      showToastMessage('error', '❌ Erreur suppression');
+      showToastMessage('error', 'Erreur suppression');
     }
   };
 

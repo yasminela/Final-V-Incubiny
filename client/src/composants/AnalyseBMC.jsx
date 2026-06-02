@@ -39,7 +39,7 @@ function AnalyseBMC({ projetId, onAnalyseComplete }) {
       });
       setResultat(response.data);
       
-      console.log('📊 Analyse terminée, envoi à l\'admin...');
+      console.log(' Analyse terminée, envoi à l\'admin...');
       
       await api.post('/notifications/send-report', {
         projetId: projetId,
@@ -47,11 +47,11 @@ function AnalyseBMC({ projetId, onAnalyseComplete }) {
         fichierBMC: file.name
       });
       
-      console.log('✅ Rapport envoyé à l\'admin');
+      console.log(' Rapport envoyé à l\'admin');
       
       if (onAnalyseComplete) onAnalyseComplete(response.data);
     } catch (err) {
-      console.error('❌ Erreur analyse:', err);
+      console.error(' Erreur analyse:', err);
       setError(err.response?.data?.message || 'Erreur lors de l\'analyse');
       setResultat(null);
     } finally {
@@ -117,10 +117,10 @@ function AnalyseBMC({ projetId, onAnalyseComplete }) {
         resultat: resultat,
         fichierBMC: file?.name
       });
-      alert('✅ Rapport envoyé à l\'administrateur avec succès !');
+      alert(' Rapport envoyé à l\'administrateur avec succès !');
     } catch (err) {
       console.error('Erreur envoi rapport:', err);
-      alert('❌ Erreur lors de l\'envoi du rapport');
+      alert(' Erreur lors de l\'envoi du rapport');
     } finally {
       setSendingReport(false);
     }
@@ -166,7 +166,7 @@ function AnalyseBMC({ projetId, onAnalyseComplete }) {
       </div>
       <form onSubmit={handleSubmit}>
         <div style={styles.formGroup}>
-          <label style={styles.label}>📄 Déposez votre Business Model Canvas (PDF)</label>
+          <label style={styles.label}> Déposez votre Business Model Canvas (PDF)</label>
           <input type="file" accept=".pdf" onChange={handleFileChange} disabled={loading} style={styles.fileInput} />
         </div>
         <button type="submit" disabled={loading} style={styles.submitBtn}>

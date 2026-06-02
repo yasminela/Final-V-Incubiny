@@ -21,9 +21,9 @@ router.get('/mes-notifications', auth, async (req, res) => {
 
 // Marquer une notification comme lue
 router.put('/:id/lire', auth, async (req, res) => {
-  console.log('📥 PUT /notifications/:id/lire appelé');
-  console.log('📝 ID:', req.params.id);
-  console.log('👤 Utilisateur:', req.user.id);
+  console.log('PUT /notifications/:id/lire appelé');
+  console.log('ID:', req.params.id);
+  console.log('Utilisateur:', req.user.id);
   
   try {
     const notification = await Notification.findOneAndUpdate(
@@ -33,22 +33,22 @@ router.put('/:id/lire', auth, async (req, res) => {
     );
     
     if (!notification) {
-      console.log('❌ Notification non trouvée');
+      console.log('Notification non trouvée');
       return res.status(404).json({ message: 'Notification non trouvée' });
     }
     
-    console.log('✅ Notification marquée comme lue');
+    console.log('Notification marquée comme lue');
     res.json(notification);
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error('Erreur:', error);
     res.status(500).json({ message: error.message });
   }
 });
 
 // Marquer toutes les notifications comme lues
 router.put('/marquer-tout-lu', auth, async (req, res) => {
-  console.log('📥 PUT /notifications/marquer-tout-lu appelé');
-  console.log('👤 Utilisateur:', req.user.id);
+  console.log('PUT /notifications/marquer-tout-lu appelé');
+  console.log('Utilisateur:', req.user.id);
   
   try {
     const result = await Notification.updateMany(
@@ -56,20 +56,20 @@ router.put('/marquer-tout-lu', auth, async (req, res) => {
       { estLue: true }
     );
     
-    console.log(`✅ ${result.modifiedCount} notification(s) marquée(s) comme lue(s)`);
+    console.log(`${result.modifiedCount} notification(s) marquée(s) comme lue(s)`);
     res.json({ 
       message: 'Toutes les notifications ont été marquées comme lues',
       modifiedCount: result.modifiedCount 
     });
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error('Erreur:', error);
     res.status(500).json({ message: error.message });
   }
 });
 // ==================== ROUTE AJOUTÉE ====================
 // Envoyer des recommandations de formations au porteur (admin)
 router.post('/envoyer-recommandations', auth, isAdmin, async (req, res) => {
-  console.log('📥 /envoyer-recommandations appelé');
+  console.log('/envoyer-recommandations appelé');
   
   try {
     const { porteurId, formations, evenements } = req.body;
@@ -83,16 +83,16 @@ router.post('/envoyer-recommandations', auth, isAdmin, async (req, res) => {
       return res.status(404).json({ message: 'Porteur non trouvé' });
     }
     
-    let message = `📚 **Nouvelles recommandations disponibles**\n\n`;
+    let message = `Nouvelles recommandations disponibles\n\n`;
     
     if (formations && formations.length > 0) {
-      message += `**Formations recommandées :**\n`;
+      message += `Formations recommandées :\n`;
       formations.forEach(f => message += `• ${f}\n`);
       message += `\n`;
     }
     
     if (evenements && evenements.length > 0) {
-      message += `**Événements recommandés :**\n`;
+      message += `Événements recommandés :\n`;
       evenements.forEach(e => {
         if (typeof e === 'object') {
           message += `• ${e.titre} - ${new Date(e.dateDebut).toLocaleDateString('fr-FR')}\n`;
@@ -104,32 +104,32 @@ router.post('/envoyer-recommandations', auth, isAdmin, async (req, res) => {
     
     await Notification.create({
       utilisateurId: porteurId,
-      titre: '📚 Nouvelles recommandations disponibles',
+      titre: 'Nouvelles recommandations disponibles',
       message: message,
       type: 'info',
       estLue: false,
       lien: '/#analyses'
     });
     
-    console.log(`✅ Recommandations envoyées à ${porteur.email}`);
+    console.log(`Recommandations envoyées à ${porteur.email}`);
     
     res.json({ 
       success: true, 
       message: `${formations?.length || 0} formation(s) et ${evenements?.length || 0} événement(s) recommandés au porteur` 
     });
   } catch (error) {
-    console.error('❌ Erreur envoi recommandations:', error);
+    console.error('Erreur envoi recommandations:', error);
     res.status(500).json({ message: error.message });
   }
 });
 
 // Envoyer un rapport d'analyse à l'admin
 router.post('/send-report', auth, async (req, res) => {
-  console.log('📥 /send-report appelé');
+  console.log('/send-report appelé');
   
   try {
     const { projetId, resultat, fichierBMC } = req.body;
-    console.log('📊 Score reçu:', resultat?.scoreImpact);
+    console.log('Score reçu:', resultat?.scoreImpact);
     
     const porteur = await Utilisateur.findById(req.user.id);
     if (!porteur) {
@@ -137,12 +137,12 @@ router.post('/send-report', auth, async (req, res) => {
     }
     
     const admins = await Utilisateur.find({ role: 'admin' });
-    console.log(`👨‍💼 ${admins.length} admin(s) trouvé(s)`);
+    console.log(`${admins.length} admin(s) trouvé(s)`);
     
     for (const admin of admins) {
       await Notification.create({
         utilisateurId: admin._id,
-        titre: "📊 Nouveau rapport d'analyse IA",
+        titre: "Nouveau rapport d'analyse IA",
         message: `${porteur.firstName} ${porteur.lastName} a soumis un BMC. Score: ${resultat.scoreImpact}/100`,
         type: 'info',
         estLue: false,
@@ -160,12 +160,12 @@ router.post('/send-report', auth, async (req, res) => {
           dateAnalyse: new Date()
         }
       });
-      console.log(`✅ Notification créée pour ${admin.email}`);
+      console.log(`Notification créée pour ${admin.email}`);
     }
     
     res.json({ success: true, message: 'Rapport envoyé' });
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error('Erreur:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -197,7 +197,7 @@ router.post('/analyses/:id/feedback', auth, isAdmin, async (req, res) => {
     
     await Notification.create({
       utilisateurId: porteurId,
-      titre: "📋 Nouveau feedback sur votre analyse IA",
+      titre: "Nouveau feedback sur votre analyse IA",
       message: `L'administrateur a ajouté un feedback à votre analyse d'impact.`,
       type: 'info',
       estLue: false,

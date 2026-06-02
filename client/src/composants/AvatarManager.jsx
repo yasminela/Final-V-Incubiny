@@ -49,12 +49,12 @@ function AvatarManager({ user, onAvatarUpdate, size = 'small' }) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('❌ Veuillez sélectionner une image (JPEG, PNG, GIF)');
+      alert(' Veuillez sélectionner une image (JPEG, PNG, GIF)');
       return;
     }
-
+    
     if (file.size > 2 * 1024 * 1024) {
-      alert('❌ L\'image ne doit pas dépasser 2 Mo');
+      alert(' L\'image ne doit pas dépasser 2 Mo');
       return;
     }
 
@@ -68,11 +68,11 @@ function AvatarManager({ user, onAvatarUpdate, size = 'small' }) {
       });
       setCurrentAvatar(res.data.avatar);
       if (onAvatarUpdate) onAvatarUpdate(res.data.avatar);
-      alert('✅ Photo de profil mise à jour !');
+      alert(' Photo de profil mise à jour !');
       setShowMenu(false);
     } catch (error) {
       console.error('Erreur upload:', error);
-      alert('❌ Erreur lors de l\'upload: ' + (error.response?.data?.message || error.message));
+      alert(' Erreur lors de l\'upload: ' + (error.response?.data?.message || error.message));
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -80,18 +80,18 @@ function AvatarManager({ user, onAvatarUpdate, size = 'small' }) {
   };
 
   const handleDeleteAvatar = async () => {
-    if (!confirm('⚠️ Supprimer votre photo de profil ?')) return;
+    if (!confirm(' Supprimer votre photo de profil ?')) return;
     
     setUploading(true);
     try {
       await api.delete('/utilisateurs/avatar');
       setCurrentAvatar(null);
       if (onAvatarUpdate) onAvatarUpdate(null);
-      alert('✅ Photo supprimée');
+      alert(' Photo supprimée');
       setShowMenu(false);
     } catch (error) {
       console.error('Erreur suppression:', error);
-      alert('❌ Erreur lors de la suppression: ' + (error.response?.data?.message || error.message));
+      alert(' Erreur lors de la suppression: ' + (error.response?.data?.message || error.message));
     } finally {
       setUploading(false);
     }
@@ -235,11 +235,11 @@ loadingOverlay: {
       {showMenu && !uploading && (
         <div style={styles.menu} ref={menuRef}>
           <div style={styles.menuItem} onClick={() => fileInputRef.current?.click()}>
-            📷 Changer la photo
+             Changer la photo
           </div>
           {hasAvatar && (
             <div style={{ ...styles.menuItem, ...styles.menuItemDanger }} onClick={handleDeleteAvatar}>
-              🗑️ Supprimer
+               Supprimer
             </div>
           )}
         </div>

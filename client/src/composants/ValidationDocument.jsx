@@ -21,7 +21,7 @@ function ValidationDocument({ onValidate }) {
     setLoading(true);
     try {
       const res = await api.get('/etapes/soumissions');
-      console.log('📋 Soumissions chargées:', res.data);
+      console.log('Soumissions chargées:', res.data);
       setSoumissions(res.data || []);
     } catch (error) {
       console.error('Erreur chargement:', error);
@@ -34,7 +34,7 @@ function ValidationDocument({ onValidate }) {
     const commentaire = feedback[id] || '';
 
     if (!estValide && !commentaire) {
-      alert('❌ Veuillez ajouter un commentaire pour expliquer le refus');
+      alert('Veuillez ajouter un commentaire pour expliquer le refus');
       return;
     }
 
@@ -43,10 +43,10 @@ function ValidationDocument({ onValidate }) {
     try {
       if (estValide) {
         await api.put(`/etapes/valider/${id}`, { commentaire });
-        alert('✅ Document validé avec succès');
+        alert('Document validé avec succès');
       } else {
         await api.put(`/etapes/refuser/${id}`, { commentaire });
-        alert('❌ Document refusé');
+        alert('Document refusé');
       }
       
       await loadSoumissions();
@@ -264,10 +264,10 @@ function ValidationDocument({ onValidate }) {
                 fontSize: '13px',
                 wordWrap: 'break-word'
               }}>
-                <strong>💬 Commentaire du porteur:</strong> {s.commentairePorteur}
+                <strong>Commentaire du porteur:</strong> {s.commentairePorteur}
               </div>
             )}
-
+            
             <textarea
               placeholder="Feedback pour le porteur (obligatoire pour un refus)..."
               value={feedback[s._id] || ''}

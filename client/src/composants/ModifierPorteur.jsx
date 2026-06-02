@@ -24,14 +24,14 @@ function ModifierPorteur({ porteur, onClose, onSuccess }) {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
       await api.put(`/utilisateurs/${porteur._id}`, formData);
-      alert('✅ Porteur modifié avec succès');
+      alert(' Porteur modifié avec succès');
       if (onSuccess) onSuccess();
       onClose();
     } catch (error) {

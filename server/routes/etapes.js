@@ -109,7 +109,7 @@ router.put('/valider/:id', auth, isAdmin, async (req, res) => {
     
     await Notification.create({
       utilisateurId: etape.porteurId,
-      titre: '✅ Étape validée',
+      titre: 'Étape validée',
       message: `Votre étape "${etape.titre}" a été validée.${commentaire ? ` Feedback: ${commentaire}` : ''}`,
       type: 'succes',
       estLue: false,
@@ -148,7 +148,7 @@ router.put('/refuser/:id', auth, isAdmin, async (req, res) => {
     
     await Notification.create({
       utilisateurId: etape.porteurId,
-      titre: '⚠️ Document à reprendre',
+      titre: 'Document à reprendre',
       message: `Votre document "${etape.titre}" nécessite des modifications. Feedback: ${commentaire}`,
       type: 'warning',
       estLue: false,
@@ -166,7 +166,7 @@ router.put('/refuser/:id', auth, isAdmin, async (req, res) => {
 
 // POST /api/etapes/soumettre - Soumettre une étape
 router.post('/soumettre', auth, upload.single('fichier'), async (req, res) => {
-  console.log('📤 Route /soumettre atteinte');
+  console.log('Route /soumettre atteinte');
   
   try {
     const { etapeId, commentaire } = req.body;
@@ -197,14 +197,14 @@ router.post('/soumettre', auth, upload.single('fichier'), async (req, res) => {
       return res.status(404).json({ success: false, message: 'Étape non trouvée' });
     }
     
-    console.log(`✅ Étape "${etape.titre}" soumise par ${req.user.email}`);
+    console.log(`Étape "${etape.titre}" soumise par ${req.user.email}`);
     
     // Notifier les admins
     const admins = await Utilisateur.find({ role: 'admin' });
     for (const admin of admins) {
       await Notification.create({
         utilisateurId: admin._id,
-        titre: '📄 Nouvelle soumission',
+        titre: 'Nouvelle soumission',
         message: `${req.user.firstName} ${req.user.lastName} a soumis l'étape "${etape.titre}"`,
         type: 'info',
         estLue: false,
@@ -214,14 +214,14 @@ router.post('/soumettre', auth, upload.single('fichier'), async (req, res) => {
     
     res.json({ success: true, message: 'Étape soumise avec succès', etape });
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error('Erreur:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
 // POST /api/etapes/soumettre-bmc - Soumettre un BMC
 router.post('/soumettre-bmc', auth, upload.single('fichier'), async (req, res) => {
-  console.log('📤 Route /soumettre-bmc atteinte');
+  console.log('Route /soumettre-bmc atteinte');
   
   try {
     const { etapeId, commentaire } = req.body;
@@ -285,7 +285,7 @@ router.post('/soumettre-bmc', auth, upload.single('fichier'), async (req, res) =
         
         await Notification.create({
           utilisateurId: req.user.id,
-          titre: '🤖 Analyse BMC terminée',
+          titre: 'Analyse BMC terminée',
           message: `Votre BMC a été analysé. Score: ${analyse.scoreImpact}/100.`,
           type: 'succes',
           estLue: false,
@@ -300,7 +300,7 @@ router.post('/soumettre-bmc', auth, upload.single('fichier'), async (req, res) =
     for (const admin of admins) {
       await Notification.create({
         utilisateurId: admin._id,
-        titre: '📊 Nouvelle analyse BMC',
+        titre: 'Nouvelle analyse BMC',
         message: `${req.user.firstName} ${req.user.lastName} a soumis son BMC. Score: ${analyseResult?.scoreImpact || 'En attente'}/100`,
         type: 'info',
         estLue: false,

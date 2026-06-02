@@ -6,7 +6,7 @@ import Utilisateur from '../models/Utilisateur.js';
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  console.log('📥 Tentative:', req.body.email);
+  console.log(' Tentative:', req.body.email);
   
   try {
     const { email, password } = req.body;
@@ -14,17 +14,18 @@ router.post('/login', async (req, res) => {
     // Recherche directe sans transformation
     const user = await Utilisateur.findOne({ email: email });
     
-    console.log('👤 Résultat recherche:', user ? 'TROUVÉ' : 'NON TROUVÉ');
+    console.log(' Tentative:', req.body.email);
+    console.log(' Résultat recherche:', user ? 'TROUVÉ' : 'NON TROUVÉ');
     
     if (!user) {
       return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
     }
     
-    console.log('📧 Email trouvé:', user.email);
-    console.log('👤 firstName:', user.firstName);
+    console.log(' Email trouvé:', user.email);
+    console.log(' firstName:', user.firstName);
     
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('🔐 Mot de passe valide:', isPasswordValid);
+    console.log(' Mot de passe valide:', isPasswordValid);
     
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
@@ -49,7 +50,7 @@ router.post('/login', async (req, res) => {
     });
     
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error('Erreur:', error);
     res.status(500).json({ message: error.message });
   }
 });

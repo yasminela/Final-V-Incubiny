@@ -135,15 +135,15 @@ function Navbar({ user, onLogout }) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('❌ Veuillez sélectionner une image');
+      alert(' Veuillez sélectionner une image');
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      alert('❌ L\'image ne doit pas dépasser 2 Mo');
+      alert(' L\'image ne doit pas dépasser 2 Mo');
       return;
     }
-
+    
     setUploading(true);
     const formData = new FormData();
     formData.append('avatar', file);
@@ -156,9 +156,9 @@ function Navbar({ user, onLogout }) {
       const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
       storedUser.avatar = res.data.avatar;
       localStorage.setItem('user', JSON.stringify(storedUser));
-      alert('✅ Photo mise à jour !');
+      alert('Photo mise à jour !');
     } catch (error) {
-      alert('❌ Erreur lors de l\'upload');
+      alert('Erreur lors de l\'upload');
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -166,7 +166,7 @@ function Navbar({ user, onLogout }) {
   };
 
   const handleDeletePhoto = async () => {
-    if (!confirm('⚠️ Supprimer votre photo ?')) return;
+    if (!confirm('Supprimer votre photo ?')) return;
 
     setUploading(true);
     try {
@@ -175,9 +175,9 @@ function Navbar({ user, onLogout }) {
       const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
       storedUser.avatar = null;
       localStorage.setItem('user', JSON.stringify(storedUser));
-      alert('✅ Photo supprimée');
+      alert('Photo supprimée');
     } catch (error) {
-      alert('❌ Erreur lors de la suppression');
+      alert('Erreur lors de la suppression');
     } finally {
       setUploading(false);
       setProfileMenuOpen(false);

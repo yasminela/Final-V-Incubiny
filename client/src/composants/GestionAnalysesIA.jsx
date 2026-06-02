@@ -459,7 +459,7 @@ function GestionAnalysesIA() {
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div style={styles.modalTitle}>
               <FontAwesomeIcon icon={faRobot} color="#667eea" />
-              🤖 Résultat de l'analyse
+               Résultat de l'analyse
             </div>
 
             <div style={{ ...styles.scoreContainer, background: getScoreColor(analyseResult.scoreImpact) + '15' }}>
@@ -505,12 +505,12 @@ function GestionAnalysesIA() {
               </div>
             )}
 
-            {/* 🌟 SECTION MENTORS RECOMMANDÉS 🌟 */}
+            {/*  SECTION MENTORS RECOMMANDÉS 🌟 */}
             {mentorsRecommandes.length > 0 && (
               <div style={{ marginTop: '24px' }}>
                 <div style={styles.feedbackTitle}>
                   <FontAwesomeIcon icon={faGraduationCap} color="#8b5cf6" />
-                  🎯 Mentors recommandés pour améliorer votre BMC
+                   Mentors recommandés pour améliorer votre BMC
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {mentorsRecommandes.map((mentor, idx) => (
@@ -541,11 +541,11 @@ function GestionAnalysesIA() {
                   ))}
                 </div>
                 <div style={{ fontSize: '12px', color: darkMode ? '#64748b' : '#94a3b8', marginTop: '12px', textAlign: 'center' }}>
-                  💡 Ces mentors sont disponibles pour vous accompagner dans l'amélioration de votre Business Model Canvas
+                   Ces mentors sont disponibles pour vous accompagner dans l'amélioration de votre Business Model Canvas
                 </div>
               </div>
             )}
-
+            
             <button style={styles.closeBtn} onClick={() => setShowAnalyseModal(false)}>
               Voir tous les détails dans l'historique
             </button>

@@ -9,7 +9,7 @@ const token = jwt.sign(
   { expiresIn: '7d' }
 );
 
-console.log('🔑 Token admin:');
+console.log('Token admin:');
 console.log(token);
-console.log('\n📋 À utiliser dans Postman:');
+console.log('\n À utiliser dans Postman:');
 console.log(`Authorization: Bearer ${token}`);

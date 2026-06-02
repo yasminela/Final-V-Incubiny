@@ -3,9 +3,7 @@ import api from '../utils/api';
 import { useTheme } from '../context/ThemeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faGraduationCap, faLightbulb, faUser, faCheck, 
-  faTimes, faSpinner, faStar, faChartLine, faRobot,
-  faCalendar, faClock, faMapMarkerAlt, faEnvelope
+  faGraduationCap, faLightbulb, faUser, faCheck, faTimes, faSpinner, faStar, faChartLine, faRobot, faCalendar, faClock, faMapMarkerAlt, faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 
 function RecommandationsFormation({ porteurId, onClose }) {
@@ -96,9 +94,9 @@ function RecommandationsFormation({ porteurId, onClose }) {
       
       if (score < 40) {
         recommandationsGenerees.push(
-          "🎯 **Revoyez votre proposition de valeur** : elle doit clairement expliquer le problème que vous résolvez.",
-          "📊 **Définissez précisément vos segments clients** : qui sont vos clients cibles ?",
-          "💰 **Structurez votre modèle économique** : identifiez vos sources de revenus."
+          "Revoyez votre proposition de valeur: elle doit clairement expliquer le problème que vous résolvez.",
+          "Définissez précisément vos segments clients: qui sont vos clients cibles ?",
+          "Structurez votre modèle économique: identifiez vos sources de revenus."
         );
         formationsGenerees.push(
           "Formation: Business Model Canvas - Les fondamentaux",
@@ -107,9 +105,9 @@ function RecommandationsFormation({ porteurId, onClose }) {
         );
       } else if (score < 70) {
         recommandationsGenerees.push(
-          "⚡ **Renforcez votre avantage concurrentiel** : en quoi êtes-vous unique ?",
-          "📈 **Affinez votre analyse de marché** : étudiez vos concurrents plus en détail.",
-          "💡 **Testez votre proposition de valeur** auprès de potentiels clients."
+          "Renforcez votre avantage concurrentiel: en quoi êtes-vous unique ?",
+          "Affinez votre analyse de marché et étudiez vos concurrents plus en détail.",
+          "Testez votre proposition de valeur auprès de potentiels clients."
         );
         formationsGenerees.push(
           "Formation: Optimisation du Business Model",
@@ -118,9 +116,9 @@ function RecommandationsFormation({ porteurId, onClose }) {
         );
       } else {
         recommandationsGenerees.push(
-          "🚀 **Préparez votre phase de scaling** : comment passer à l'échelle ?",
-          "💼 **Travaillez votre pitch** pour convaincre les investisseurs.",
-          "🌍 **Explorez les opportunités d'expansion** géographique ou sectorielle."
+          "Préparez votre phase de scaling: comment passer à l'échelle ?",
+          "Travaillez votre pitch pour convaincre les investisseurs.",
+          "Explorez les opportunités d'expansion géographique ou sectorielle."
         );
         formationsGenerees.push(
           "Formation: Scaling et expansion",
@@ -149,7 +147,7 @@ function RecommandationsFormation({ porteurId, onClose }) {
 
   const handleEnvoyerRecommandations = async () => {
     if (selectedFormations.length === 0 && selectedEvenements.length === 0) {
-      alert('⚠️ Veuillez sélectionner au moins une formation ou un événement à recommander');
+      alert(' Veuillez sélectionner au moins une formation ou un événement à recommander');
       return;
     }
     
@@ -161,11 +159,11 @@ function RecommandationsFormation({ porteurId, onClose }) {
         evenements: selectedEvenements
       });
       
-      alert(`✅ ${selectedFormations.length + selectedEvenements.length} recommandation(s) envoyée(s) avec succès !`);
+      alert(` ${selectedFormations.length + selectedEvenements.length} recommandation(s) envoyée(s) avec succès !`);
       onClose();
     } catch (error) {
       console.error('Erreur:', error);
-      alert('❌ Erreur lors de l\'envoi des recommandations: ' + (error.response?.data?.message || error.message));
+      alert(' Erreur lors de l\'envoi des recommandations: ' + (error.response?.data?.message || error.message));
     } finally {
       setSending(false);
     }
@@ -424,7 +422,7 @@ function RecommandationsFormation({ porteurId, onClose }) {
                     }}
                     onClick={() => handleToggleFormation(formation)}
                   >
-                    <span>📚 {formation}</span>
+                    <span> {formation}</span>
                     {selectedFormations.includes(formation) && (
                       <span style={{ color: '#10b981' }}>
                         <FontAwesomeIcon icon={faCheck} /> Sélectionné

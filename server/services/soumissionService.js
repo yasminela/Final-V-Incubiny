@@ -18,7 +18,7 @@ export const verifierSoumissionsProches = async () => {
   for (const soumission of soumissionsProches) {
     await Notification.create({
       utilisateurId: soumission.porteurId._id,
-      titre: "⏰ Deadline approche !",
+      titre: "Deadline approche !",
       message: `La soumission "${soumission.titre}" doit être rendue dans moins de 24h.`,
       type: 'warning',
       estLue: false,
@@ -27,7 +27,7 @@ export const verifierSoumissionsProches = async () => {
     
     soumission.alerteEnvoyee = true;
     await soumission.save();
-    console.log(`📧 Alerte envoyée pour: ${soumission.titre}`);
+    console.log(`Alerte envoyée pour: ${soumission.titre}`);
   }
   
   // Soumissions avec deadline dans les 48h
@@ -40,7 +40,7 @@ export const verifierSoumissionsProches = async () => {
   for (const soumission of soumissionsProches48h) {
     await Notification.create({
       utilisateurId: soumission.porteurId._id,
-      titre: "📅 Rappel de deadline",
+      titre: "Rappel de deadline",
       message: `La soumission "${soumission.titre}" est due dans moins de 48h.`,
       type: 'info',
       estLue: false,
@@ -71,7 +71,7 @@ export const verifierSoumissionsRetard = async () => {
     // Envoyer notification au porteur
     await Notification.create({
       utilisateurId: soumission.porteurId._id,
-      titre: "⚠️ Soumission en retard !",
+      titre: "Soumission en retard !",
       message: `La soumission "${soumission.titre}" est en retard. Veuillez la déposer dès que possible.`,
       type: 'erreur',
       estLue: false,
@@ -83,7 +83,7 @@ export const verifierSoumissionsRetard = async () => {
     for (const admin of admins) {
       await Notification.create({
         utilisateurId: admin._id,
-        titre: "⚠️ Soumission en retard",
+        titre: "Soumission en retard",
         message: `${soumission.porteurId.firstName} ${soumission.porteurId.lastName} est en retard pour "${soumission.titre}".`,
         type: 'warning',
         estLue: false,
@@ -91,7 +91,7 @@ export const verifierSoumissionsRetard = async () => {
       });
     }
     
-    console.log(`📧 Alerte retard pour: ${soumission.titre}`);
+    console.log(`Alerte retard pour: ${soumission.titre}`);
   }
 };
 
@@ -141,7 +141,7 @@ export const creerSoumission = async (porteurId, titre, dateLimite, etapeId = nu
   // Notification immédiate
   await Notification.create({
     utilisateurId: porteurId,
-    titre: "📋 Nouvelle soumission à rendre",
+    titre: "Nouvelle soumission à rendre",
     message: `Vous devez soumettre "${titre}" avant le ${new Date(dateLimite).toLocaleDateString()}.`,
     type: 'info',
     estLue: false,
@@ -166,7 +166,7 @@ export const marquerSoumise = async (soumissionId, dateSoumission = null) => {
   // Notification de confirmation
   await Notification.create({
     utilisateurId: soumission.porteurId,
-    titre: estEnRetard ? "⚠️ Soumission en retard" : "✅ Soumission reçue",
+    titre: estEnRetard ? "Soumission en retard" : "Soumission reçue",
     message: estEnRetard 
       ? `Votre soumission "${soumission.titre}" a été reçue avec retard.` 
       : `Votre soumission "${soumission.titre}" a été reçue dans les délais.`,

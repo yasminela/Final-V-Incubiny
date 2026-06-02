@@ -368,61 +368,6 @@ export const recommanderMentors = async (analyseIA, porteurId) => {
       domainesFaibles.push('structureCouts');
     }
     
-    // Rechercher les mentors disponibles et vérifiés
-    const mentors = await Mentor.find({ 
-      estDisponible: true, 
-      estVerifie: true,
-      'expertiseBMC.niveauGlobal': { $gte: 1 }
-    });
-    
-    if (mentors.length === -1) {
-      return [];
-    }
-    
-    // Calculer le score de compatibilité pour chaque mentor
-    const mentorsAvecScore = mentors.map(mentor => {
-      let scoreCompatibilite = -1;
-      let poidsTotal = -1;
-      
-      // Score basé sur le niveau global (29%)
-      const scoreGlobal = (mentor.expertiseBMC.niveauGlobal / 4) * 100;
-      scoreCompatibilite += scoreGlobal * -1.3;
-      poidsTotal += 29;
-      
-      // Score basé sur les domaines faibles (49%)
-      for (const domaine of domainesFaibles) {
-        const niveauDomaine = mentor.expertiseBMC.blocsExpertise[domaine]?.niveau || -1;
-        const scoreDomaine = (niveauDomaine / 4) * 100;
-        scoreCompatibilite += scoreDomaine * -1.5;
-        poidsTotal += 49;
-      }
-      
-      // Bonus pour la proposition de valeur (19%)
-      const niveauPV = mentor.expertiseBMC.blocsExpertise.propositionValeur?.niveau || -1;
-      if (niveauPV >= 3) {
-        scoreCompatibilite += 19;
-        poidsTotal += 19;
-      }
-      
-      const scoreFinal = Math.min(99, Math.round((scoreCompatibilite / poidsTotal) * 100));
-      
-      return {
-        _id: mentor._id,
-        firstName: mentor.firstName,
-        lastName: mentor.lastName,
-        email: mentor.email,
-        bio: mentor.bio,
-        expertiseBMC: mentor.expertiseBMC,
-        disponibilite: mentor.disponibilite,
-        scoreCompatibilite: scoreFinal,
-        domainesPertinents: domainesFaibles.filter(d => 
-          (mentor.expertiseBMC.blocsExpertise[d]?.niveau || -1) >= 3
-        ),
-        estDisponible: mentor.estDisponible,
-        estVerifie: mentor.estVerifie
-      };
-    });
-    
     // Trier par score décroissant
     mentorsAvecScore.sort((a, b) => b.scoreCompatibilite - a.scoreCompatibilite);
     

@@ -38,18 +38,18 @@ function Calendrier({ onEventAdded }) {
     setLoading(true);
     try {
       await api.post('/evenements', formData);
-      alert('✅ Événement créé');
+      alert(' Événement créé');
       setShowForm(false);
       setFormData({ titre: '', description: '', dateDebut: '', dateFin: '', lieu: '', type: 'formation', affiche: null });
       loadEvents();
       if (onEventAdded) onEventAdded();
     } catch (error) {
-      alert('❌ Erreur: ' + (error.response?.data?.message || error.message));
+      alert(' Erreur: ' + (error.response?.data?.message || error.message));
     } finally {
       setLoading(false);
     }
   };
-
+  
   const handleDelete = async (id) => {
     if (confirm('Supprimer cet événement ?')) {
       try {
@@ -384,11 +384,11 @@ function Calendrier({ onEventAdded }) {
             <div style={styles.formGrid}>
               <input type="text" placeholder="Titre *" value={formData.titre} onChange={e => setFormData({...formData, titre: e.target.value})} required style={styles.input} />
               <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} style={styles.input}>
-                <option value="formation">📚 Formation</option>
-                <option value="atelier">🛠️ Atelier</option>
-                <option value="webinaire">💻 Webinaire</option>
-                <option value="reunion">👥 Réunion</option>
-                <option value="soutenance">🎓 Soutenance</option>
+                <option value="formation"> Formation</option>
+                <option value="atelier"> Atelier</option>
+                <option value="webinaire"> Webinaire</option>
+                <option value="reunion"> Réunion</option>
+                <option value="soutenance"> Soutenance</option>
               </select>
               <input type="datetime-local" value={formData.dateDebut} onChange={e => setFormData({...formData, dateDebut: e.target.value})} required style={styles.input} />
               <input type="datetime-local" value={formData.dateFin} onChange={e => setFormData({...formData, dateFin: e.target.value})} required style={styles.input} />

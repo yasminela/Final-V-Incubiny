@@ -153,7 +153,7 @@ function ScoreProfil() {
             {/* Informations personnelles */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontSize: '13px' }}>
-                <span>📝 Informations personnelles</span>
+                <span>Informations personnelles</span>
                 <span>{details.personnel?.obtenu || 0}/{details.personnel?.total || 20}</span>
               </div>
               <div style={{ height: '6px', background: darkMode ? '#334155' : '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
@@ -163,7 +163,7 @@ function ScoreProfil() {
           </div>
         )}
       </div>
-
+      
       <style>{`
         @keyframes shimmer {
           0% { transform: translateX(-100%); }

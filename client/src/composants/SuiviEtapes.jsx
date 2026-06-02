@@ -27,7 +27,7 @@ function SuiviEtapes() {
     setLoading(true);
     try {
       const res = await api.get('/etapes/mes-etapes');
-      console.log('📋 Étapes chargées:', res.data);
+      console.log('Étapes chargées:', res.data);
       setEtapes(res.data || []);
     } catch (error) {
       console.error('Erreur chargement étapes:', error);
@@ -35,11 +35,11 @@ function SuiviEtapes() {
       setLoading(false);
     }
   };
-
+  
 const handleSubmit = async (e) => {
   e.preventDefault();
   if (!fichier) {
-    alert('❌ Veuillez sélectionner un fichier');
+    alert('Veuillez sélectionner un fichier');
     return;
   }
 
@@ -55,7 +55,7 @@ const handleSubmit = async (e) => {
     });
     
     if (res.data.success) {
-      alert('✅ Étape soumise avec succès !');
+      alert('Étape soumise avec succès !');
       setShowModal(false);
       setSelectedEtape(null);
       setCommentaire('');
@@ -66,7 +66,7 @@ const handleSubmit = async (e) => {
     }
   } catch (error) {
     console.error('Erreur soumission:', error);
-    alert('❌ Erreur: ' + (error.response?.data?.message || error.message));
+    alert('Erreur: ' + (error.response?.data?.message || error.message));
   } finally {
     setUploading(false);
   }

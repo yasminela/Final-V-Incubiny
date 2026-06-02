@@ -13,7 +13,7 @@ function ValidationProjet({ projet, onClose, onSuccess }) {
 
   const handleValidation = async (estValide) => {
     if (!estValide && !feedback) {
-      alert('❌ Veuillez ajouter un feedback pour expliquer le rejet');
+      alert('Veuillez ajouter un feedback pour expliquer le rejet');
       return;
     }
 
@@ -30,10 +30,10 @@ function ValidationProjet({ projet, onClose, onSuccess }) {
       
       if (estValide) {
         await api.put(`/projets/valider/${projet._id}`, { feedback });
-        alert(`✅ Projet "${projet.titre}" validé avec succès !`);
+        alert(`Projet "${projet.titre}" validé avec succès !`);
       } else {
         await api.put(`/projets/rejeter/${projet._id}`, { feedback });
-        alert(`❌ Projet "${projet.titre}" rejeté.`);
+        alert(`Projet "${projet.titre}" rejeté.`);
       }
       
       if (onSuccess) onSuccess();
@@ -205,33 +205,33 @@ function ValidationProjet({ projet, onClose, onSuccess }) {
         <div style={styles.header}>
           <h2 style={styles.title}>Validation du projet</h2>
           <div style={styles.statutBadge}>
-            {projet.statut === 'en_attente' ? '⏳ En attente' : 
-             projet.statut === 'valide' ? '✅ Validé' : '❌ Rejeté'}
+            {projet.statut === 'en_attente' ? 'En attente' : 
+             projet.statut === 'valide' ? 'Validé' : 'Rejeté'}
           </div>
         </div>
 
         <div style={styles.section}>
-          <div style={styles.label}>📋 Titre du projet</div>
+          <div style={styles.label}>Titre du projet</div>
           <div style={styles.value}>{projet.titre || 'Non renseigné'}</div>
         </div>
 
         <div style={styles.section}>
-          <div style={styles.label}>📝 Description</div>
+          <div style={styles.label}>Description</div>
           <div style={styles.value}>{projet.description || 'Non renseigné'}</div>
         </div>
 
         <div style={styles.section}>
-          <div style={styles.label}>🏭 Secteur</div>
+          <div style={styles.label}>Secteur</div>
           <div style={styles.value}>{projet.secteur || 'Non renseigné'}</div>
         </div>
 
         <div style={styles.section}>
-          <div style={styles.label}>💰 Budget</div>
+          <div style={styles.label}>Budget</div>
           <div style={styles.value}>{projet.budget ? `${projet.budget.toLocaleString()} €` : 'Non renseigné'}</div>
         </div>
 
         <div style={styles.section}>
-          <div style={styles.label}>👤 Porteur du projet</div>
+          <div style={styles.label}>Porteur du projet</div>
           <div style={styles.value}>
             <strong>{projet.porteurId?.firstName} {projet.porteurId?.lastName}</strong><br />
             {projet.porteurId?.email}
@@ -240,7 +240,7 @@ function ValidationProjet({ projet, onClose, onSuccess }) {
 
         <div style={styles.section}>
           <div style={styles.label}>
-            💬 Feedback {!feedback && <span style={{ color: '#ef4444' }}>(obligatoire pour un rejet)</span>}
+            Feedback {!feedback && <span style={{ color: '#ef4444' }}>(obligatoire pour un rejet)</span>}
           </div>
           <textarea
             placeholder="Ajoutez un commentaire pour le porteur..."
@@ -273,13 +273,13 @@ function ValidationProjet({ projet, onClose, onSuccess }) {
           </button>
         </div>
       </div>
-
+      
       {/* Modal de confirmation */}
       {showConfirm && (
         <div style={styles.confirmOverlay}>
           <div style={styles.confirmContent}>
             <h3 style={{ marginBottom: '16px' }}>
-              {actionType === 'valider' ? '✅ Valider le projet' : '❌ Rejeter le projet'}
+              {actionType === 'valider' ? 'Valider le projet' : 'Rejeter le projet'}
             </h3>
             <p>
               {actionType === 'valider' 

@@ -11,12 +11,6 @@ const porteurs = [
   { email: 'amel.jaballah@polytechnicien.tn', motDePasse: 'Incuamel995biny' },
   { email: 'nour.rezgui.122004@gmail.com', motDePasse: 'Incunour962biny' },
   { email: 'Zouhour.Rezgui@esprit.tn', motDePasse: 'Incuzouhour962biny' },
-  { email: 'Ellafisouha@outlook.com', motDePasse: 'Incusouha949biny' },
-  { email: 'mzoughisoumaya2005@gmail.com', motDePasse: 'Incusoumaya965biny' },
-  { email: 'islemmoussaoui14@gmail.com', motDePasse: 'Incuislem929biny' },
-  { email: 'jouhainabennejma11@gmail.com', motDePasse: 'Incujouhaina956biny' },
-  { email: 'hajrirahma0420@gmail.com', motDePasse: 'Incurahma240biny' },
-  { email: 'linaazgal07@gmail.com', motDePasse: 'Inculina254biny' }
 ];
 
 async function setPasswords() {
@@ -38,7 +32,7 @@ async function setPasswords() {
       }
     }
 
-    console.log('\n🎉 Tous les mots de passe ont été configurés !');
+    console.log('\n Tous les mots de passe ont été configurés !');
     process.exit(0);
   } catch (error) {
     console.error('Erreur:', error);

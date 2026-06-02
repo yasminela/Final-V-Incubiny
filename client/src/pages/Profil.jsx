@@ -49,15 +49,15 @@ function Profil({ user, onLogout }) {
     setLoading(true);
     try {
       await api.put('/utilisateurs/me', formData);
-      alert('✅ Profil mis à jour avec succès');
+      alert('Profil mis à jour avec succès');
       loadUserProfile();
     } catch (error) {
-      alert('❌ Erreur lors de la mise à jour');
+      alert('Erreur lors de la mise à jour');
     } finally {
       setLoading(false);
     }
   };
-
+  
   const styles = {
     container: {
       minHeight: '100vh',
@@ -258,7 +258,7 @@ function Profil({ user, onLogout }) {
               <label style={styles.label}>Rôle</label>
               <div>
                 <span style={styles.roleBadge}>
-                  {currentUser?.role === 'admin' ? '👑 Administrateur' : '📌 Porteur de projet'}
+                  {currentUser?.role === 'admin' ? 'Administrateur' : 'Porteur de projet'}
                 </span>
               </div>
             </div>

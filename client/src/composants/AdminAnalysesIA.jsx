@@ -157,14 +157,14 @@ function AdminAnalysesIA() {
     
     try {
       await api.delete(`/ai/analyse/${analyseId}`);
-      alert('✅ Analyse supprimée avec succès');
+      alert(' Analyse supprimée avec succès');
       loadAnalyses();
     } catch (error) {
       console.error('Erreur:', error);
-      alert('❌ Erreur lors de la suppression');
+      alert('Erreur lors de la suppression');
     }
   };
-
+  
   const voirDetails = (analyse) => {
     setSelectedDetails(analyse);
     setShowDetailsModal(true);
@@ -172,20 +172,20 @@ function AdminAnalysesIA() {
 
   const sendFeedback = async (analyseId) => {
     if (!feedback.trim()) {
-      alert('⚠️ Veuillez saisir un feedback pour le porteur');
+      alert(' Veuillez saisir un feedback pour le porteur');
       return;
     }
     
     setSendingFeedback(true);
     try {
       await api.post(`/ai/analyse/${analyseId}/feedback`, { feedback });
-      alert('✅ Feedback envoyé au porteur avec succès');
+      alert(' Feedback envoyé au porteur avec succès');
       setSelectedAnalyse(null);
       setFeedback('');
       loadAnalyses();
     } catch (error) {
       console.error('Erreur envoi feedback:', error);
-      alert('❌ Erreur lors de l\'envoi du feedback');
+      alert(' Erreur lors de l\'envoi du feedback');
     } finally {
       setSendingFeedback(false);
     }
@@ -710,12 +710,12 @@ function AdminAnalysesIA() {
               Détails de l'analyse - {selectedDetails.porteurId?.firstName} {selectedDetails.porteurId?.lastName}
             </div>
             
-            <div><strong>📧 Email:</strong> {selectedDetails.porteurId?.email}</div>
-            <div><strong>📅 Date:</strong> {new Date(selectedDetails.dateAnalyse).toLocaleString()}</div>
-            <div><strong>📎 Fichier:</strong> {selectedDetails.fichierBMC}</div>
+            <div><strong> Email:</strong> {selectedDetails.porteurId?.email}</div>
+            <div><strong> Date:</strong> {new Date(selectedDetails.dateAnalyse).toLocaleString()}</div>
+            <div><strong> Fichier:</strong> {selectedDetails.fichierBMC}</div>
             
             <div style={{ marginTop: '15px', padding: '15px', background: darkMode ? '#0f172a' : '#f8fafc', borderRadius: '10px' }}>
-              <strong>🎯 Score:</strong> {selectedDetails.scoreImpact}/100 - {getScoreText(selectedDetails.scoreImpact)}
+              <strong> Score:</strong> {selectedDetails.scoreImpact}/100 - {getScoreText(selectedDetails.scoreImpact)}
               <div style={{ 
                 height: '8px', 
                 background: darkMode ? '#334155' : '#e2e8f0', 
@@ -784,13 +784,13 @@ function AdminAnalysesIA() {
             </div>
             
             <div style={{ marginBottom: '20px', padding: '15px', background: darkMode ? '#0f172a' : '#f8fafc', borderRadius: '10px' }}>
-              <p><strong>🎯 Score:</strong> {selectedAnalyse.scoreImpact}/100</p>
+              <p><strong> Score:</strong> {selectedAnalyse.scoreImpact}/100</p>
               <p><strong><FontAwesomeIcon icon={faRobot} /> Analyse IA:</strong></p>
               <p style={{ marginTop: '5px', fontSize: '13px' }}>{selectedAnalyse.feedback}</p>
             </div>
             
             <label style={{ fontWeight: 'bold', marginBottom: '8px', display: 'block' }}>
-              💬 Votre feedback pour le porteur :
+               Votre feedback pour le porteur :
             </label>
             <textarea
               placeholder="Rédigez votre feedback détaillé ici..."
