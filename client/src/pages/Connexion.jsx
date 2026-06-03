@@ -59,7 +59,7 @@ function Connexion({ onLogin }) {
       const response = await api.post('/auth/login', { email, password });
       const { token, user } = response.data;
       
-      console.log('✅ Connexion réussie:', user.email);
+      console.log('Connexion réussie:', user.email);
       
       if (onLogin) {
         onLogin(user, token);

@@ -3,18 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import api from '../utils/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faSun, 
-  faMoon, 
-  faCamera,
-  faTrashAlt,
-  faSignOutAlt,
-  faBars,
-  faTimes,
-  faChevronDown,
-  faChevronUp,
-  faBell,
-  faPlayCircle
+import { faSun, faMoon, faCamera, faTrashAlt, faSignOutAlt, faBars, faTimes, faChevronDown, faChevronUp, faBell, faPlayCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar({ user, onLogout }) {
@@ -506,7 +495,7 @@ function Navbar({ user, onLogout }) {
               {notificationsMenuOpen && (
                 <div style={styles.notificationPanel}>
                   <div style={styles.notificationHeader}>
-                    <span>🔔 Notifications</span>
+                    <span> Notifications</span>
                     {unreadCount > 0 && <button onClick={marquerToutCommeLu} style={{ color: '#667eea', background: 'none', border: 'none', cursor: 'pointer' }}>Tout marquer comme lu</button>}
                   </div>
                   <div style={styles.notificationList}>
@@ -529,7 +518,7 @@ function Navbar({ user, onLogout }) {
             <div style={styles.profileContainer} ref={profileMenuRef}>
               <button 
                 onClick={() => {
-                  console.log('🔘 Bouton profil cliqué');
+                  console.log(' Bouton profil cliqué');
                   setProfileMenuOpen(!profileMenuOpen);
                 }}
                 style={styles.profileBtn}

@@ -82,7 +82,7 @@ function HeroSection({ user, stats }) {
           fontSize: '40px',
           animation: 'float 3s ease-in-out infinite'
         }}>
-          🚀
+          <FontAwesomeIcon icon={faCalendarAlt} color="#fff" />
         </div>
       </div>
       <style>{`

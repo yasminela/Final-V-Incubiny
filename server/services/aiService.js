@@ -76,25 +76,25 @@ export const analyserPropositionValeur = (texte) => {
 
   // Générer des recommandations basées sur les mots-clés manquants
   if (motsTrouves.PROBLEME.length < 2) {
-    recommandations.push("🎯 **Clarifiez le problème** : Décrivez précisément le problème que votre solution résout.");
+    recommandations.push(" Clarifiez le problème: Décrivez précisément le problème que votre solution résout.");
   }
   if (motsTrouves.SOLUTION.length < 2) {
-    recommandations.push("💡 **Détaillez votre solution** : Expliquez comment votre produit/service répond au problème.");
+    recommandations.push(" Détaillez votre solution: Expliquez comment votre produit/service répond au problème.");
   }
   if (motsTrouves.VALEUR.length < 1) {
-    recommandations.push("💰 **Définissez votre valeur ajoutée** : Quels bénéfices concrets vos clients obtiennent-ils ?");
+    recommandations.push(" Définissez votre valeur ajoutée: Quels bénéfices concrets vos clients obtiennent-ils ?");
   }
   if (motsTrouves.UNICITE.length < 1) {
-    recommandations.push("🌟 **Mettez en avant votre unicité** : En quoi êtes-vous différent de la concurrence ?");
+    recommandations.push(" Mettez en avant votre unicité: En quoi êtes-vous différent de la concurrence ?");
   }
   if (motsTrouves.AVANTAGE.length < 1) {
-    recommandations.push("⚔️ **Explicitez votre avantage concurrentiel** : Quelle est votre force principale ?");
+    recommandations.push(" Explicitez votre avantage concurrentiel: Quelle est votre force principale ?");
   }
   if (motsTrouves.INNOVATION.length < 1) {
-    recommandations.push("🚀 **Valorisez votre innovation** : Qu'est-ce qui rend votre approche innovante ?");
+    recommandations.push(" Valorisez votre innovation: Qu'est-ce qui rend votre approche innovante ?");
   }
   if (motsTrouves.MARCHE.length < 1) {
-    recommandations.push("🎯 **Définissez votre marché cible** : Qui sont vos clients idéaux ?");
+    recommandations.push(" Définissez votre marché cible: Qui sont vos clients idéaux ?");
   }
 
   return {
@@ -126,16 +126,16 @@ export const analyserFaisabilite = (texte) => {
   ) / 100;
 
   if (scores.RESSOURCES < 50) {
-    recommandations.push("👥 **Renforcez vos ressources** : Détaillez votre équipe, compétences et budget.");
+    recommandations.push(" Renforcez vos ressources: Détaillez votre équipe, compétences et budget.");
   }
   if (scores.TECHNOLOGIE < 30) {
-    recommandations.push("💻 **Précisez votre stack technique** : Quelles technologies allez-vous utiliser ?");
+    recommandations.push(" Précisez votre stack technique: Quelles technologies allez-vous utiliser ?");
   }
   if (scores.PARTENARIAT < 30) {
-    recommandations.push("🤝 **Développez vos partenariats** : Identifiez les partenaires clés pour votre projet.");
+    recommandations.push(" Développez vos partenariats: Identifiez les partenaires clés pour votre projet.");
   }
   if (scores.TEMPS < 30) {
-    recommandations.push("📅 **Établissez un planning** : Définissez les étapes et délais de réalisation.");
+    recommandations.push(" Établissez un planning: Définissez les étapes et délais de réalisation.");
   }
 
   return {
@@ -163,43 +163,43 @@ export const genererRecommandationsFormations = (analyseValeur, analyseFaisabili
   
   // Recommandations basées sur la proposition de valeur
   if (analyseValeur.score < 0.5) {
-    formations.push("🎯 Formation: 'Business Model Canvas - Les fondamentaux' - Apprenez à structurer votre proposition de valeur");
-    formations.push("💡 Formation: 'Value Proposition Design' - Maîtrisez l'art de créer une valeur unique");
+    formations.push(" Formation: 'Business Model Canvas - Les fondamentaux' - Apprenez à structurer votre proposition de valeur");
+    formations.push(" Formation: 'Value Proposition Design' - Maîtrisez l'art de créer une valeur unique");
   }
   
   if (analyseValeur.motsTrouves.UNICITE.length === 0) {
-    formations.push("🌟 Formation: 'Stratégie de différenciation' - Créez un avantage concurrentiel durable");
+    formations.push(" Formation: 'Stratégie de différenciation' - Créez un avantage concurrentiel durable");
   }
   
   if (analyseValeur.motsTrouves.INNOVATION.length === 0) {
-    formations.push("🚀 Formation: 'Innovation et créativité' - Développez des idées disruptives");
+    formations.push(" Formation: 'Innovation et créativité' - Développez des idées disruptives");
   }
   
   if (analyseValeur.motsTrouves.MARCHE.length < 2) {
-    formations.push("📊 Formation: 'Marketing stratégique' - Identifiez et atteignez vos clients cibles");
+    formations.push(" Formation: 'Marketing stratégique' - Identifiez et atteignez vos clients cibles");
   }
   
   // Recommandations basées sur la faisabilité
   if (analyseFaisabilite.score < 0.5) {
-    formations.push("💰 Formation: 'Finance pour entrepreneurs' - Maîtrisez vos prévisions financières");
-    formations.push("👥 Formation: 'Gestion d'équipe et leadership' - Développez vos compétences managériales");
+    formations.push(" Formation: 'Finance pour entrepreneurs' - Maîtrisez vos prévisions financières");
+    formations.push(" Formation: 'Gestion d'équipe et leadership' - Développez vos compétences managériales");
   }
   
   if (analyseFaisabilite.scoreDetails.TECHNOLOGIE < 40) {
-    formations.push("💻 Formation: 'Tech pour non-techniciens' - Comprenez les bases technologiques");
+    formations.push(" Formation: 'Tech pour non-techniciens' - Comprenez les bases technologiques");
   }
   
   if (analyseFaisabilite.scoreDetails.PARTENARIAT < 30) {
-    formations.push("🤝 Formation: 'Négociation et partenariats' - Créez des alliances gagnantes");
+    formations.push(" Formation: 'Négociation et partenariats' - Créez des alliances gagnantes");
   }
   
   // Score global
   if (scoreGlobal < 40) {
-    formations.push("🔄 Formation: 'Refonte du modèle d'affaires' - Repartez sur des bases solides");
+    formations.push(" Formation: 'Refonte du modèle d'affaires' - Repartez sur des bases solides");
   } else if (scoreGlobal < 70) {
-    formations.push("📈 Formation: 'Optimisation du Business Model' - Améliorez votre modèle existant");
+    formations.push(" Formation: 'Optimisation du Business Model' - Améliorez votre modèle existant");
   } else {
-    formations.push("🏆 Formation: 'Scaling et croissance' - Passez à l'échelle supérieure");
+    formations.push(" Formation: 'Scaling et croissance' - Passez à l'échelle supérieure");
   }
   
   // Supprimer les doublons
@@ -213,45 +213,45 @@ export const genererFeedbackComplet = (analyseValeur, analyseFaisabilite, scoreG
   
   // Feedback sur la proposition de valeur
   if (analyseValeur.score >= 0.7) {
-    feedback += "✅ **Proposition de valeur excellente !** Votre offre est claire, unique et répond à un réel besoin du marché.\n\n";
+    feedback += " Proposition de valeur excellente ! Votre offre est claire, unique et répond à un réel besoin du marché.\n\n";
   } else if (analyseValeur.score >= 0.4) {
-    feedback += "📊 **Proposition de valeur intéressante** mais quelques points méritent d'être renforcés.\n\n";
+    feedback += " Proposition de valeur intéressante mais quelques points méritent d'être renforcés.\n\n";
   } else {
-    feedback += "⚠️ **Proposition de valeur à retravailler** : votre offre manque de clarté et de différenciation.\n\n";
+    feedback += " Proposition de valeur à retravailler: votre offre manque de clarté et de différenciation.\n\n";
   }
   
   // Feedback détaillé
   if (analyseValeur.motsTrouves.PROBLEME.length === 0) {
-    feedback += "❌ **Problème non identifié** : Vous devez clairement définir le problème que vous résolvez.\n";
+    feedback += " Problème non identifié: Vous devez clairement définir le problème que vous résolvez.\n";
   }
   if (analyseValeur.motsTrouves.SOLUTION.length === 0) {
-    feedback += "❌ **Solution vague** : Décrivez précisément comment votre produit/service répond au problème.\n";
+    feedback += " Solution vague: Décrivez précisément comment votre produit/service répond au problème.\n";
   }
   if (analyseValeur.motsTrouves.VALEUR.length === 0) {
-    feedback += "❌ **Valeur ajoutée absente** : Expliquez les bénéfices concrets pour vos clients.\n";
+    feedback += " Valeur ajoutée absente: Expliquez les bénéfices concrets pour vos clients.\n";
   }
   if (analyseValeur.motsTrouves.UNICITE.length === 0) {
-    feedback += "❌ **Manque de différenciation** : En quoi êtes-vous unique face à la concurrence ?\n";
+    feedback += " Manque de différenciation: En quoi êtes-vous unique face à la concurrence ?\n";
   }
   
   // Feedback sur la faisabilité
-  feedback += "\n📌 **Faisabilité du projet** :\n";
+  feedback += "\n Faisabilité du projet :\n";
   if (analyseFaisabilite.score >= 0.7) {
-    feedback += "✅ Votre projet semble bien structuré et réalisable.\n";
+    feedback += " Votre projet semble bien structuré et réalisable.\n";
   } else if (analyseFaisabilite.score >= 0.4) {
-    feedback += "⚠️ Quelques points à clarifier pour améliorer la faisabilité.\n";
+    feedback += " Quelques points à clarifier pour améliorer la faisabilité.\n";
   } else {
-    feedback += "❌ Des lacunes importantes à combler avant le lancement.\n";
+    feedback += " Des lacunes importantes à combler avant le lancement.\n";
   }
   
   // Score global
-  feedback += `\n🎯 **Score global : ${scoreGlobal}/100**\n`;
+  feedback += `\n Score global : ${scoreGlobal}/100\n`;
   if (scoreGlobal >= 70) {
-    feedback += "🏆 Excellent travail ! Votre projet a un fort potentiel. Concentrez-vous sur l'exécution.";
+    feedback += "Excellent travail ! Votre projet a un fort potentiel. Concentrez-vous sur l'exécution.";
   } else if (scoreGlobal >= 40) {
-    feedback += "📈 Bon travail ! Les formations recommandées vous aideront à atteindre l'excellence.";
+    feedback += "Bon travail ! Les formations recommandées vous aideront à atteindre l'excellence.";
   } else {
-    feedback += "🔄 Votre projet nécessite des ajustements majeurs. Les formations recommandées sont essentielles.";
+    feedback += "Votre projet nécessite des ajustements majeurs. Les formations recommandées sont essentielles.";
   }
   
   return feedback;
@@ -271,7 +271,7 @@ export const analyserBMCPDF = async (cheminFichier) => {
         feedback: "Le document ne contient pas assez de texte pour une analyse pertinente.",
         recommandations: ["Utilisez notre template BMC disponible sur la plateforme"],
         formations: ["Formation: Business Model Canvas - Les fondamentaux"],
-        secteur: { icone: '🚀', nom: 'Non détecté' }
+        secteur: { nom: 'Non détecté' }
       };
     }
     
@@ -294,11 +294,11 @@ export const analyserBMCPDF = async (cheminFichier) => {
     const niveauImpact = scoreGlobal >= 70 ? 'fort' : scoreGlobal >= 40 ? 'moyen' : 'faible';
     
     // Détecter le secteur (optionnel)
-    const secteur = { icone: '🚀', nom: 'Business' };
+    const secteur = { nom: 'Business' };
     
-    console.log(`✅ Analyse complète - Score: ${scoreGlobal}/100 - Niveau: ${niveauImpact}`);
-    console.log(`📊 Proposition de valeur: ${Math.round(analyseValeur.score * 100)}%`);
-    console.log(`📊 Faisabilité: ${Math.round(analyseFaisabilite.score * 100)}%`);
+    console.log(`Analyse complète - Score: ${scoreGlobal}/100 - Niveau: ${niveauImpact}`);
+    console.log(`Proposition de valeur: ${Math.round(analyseValeur.score * 100)}%`);
+    console.log(`Faisabilité: ${Math.round(analyseFaisabilite.score * 100)}%`);
     
     return {
       scoreImpact: scoreGlobal,
@@ -315,7 +315,7 @@ export const analyserBMCPDF = async (cheminFichier) => {
     };
     
   } catch (error) {
-    console.error('❌ Erreur analyse BMC:', error);
+    console.error('Erreur analyse BMC:', error);
     return {
       erreur: error.message,
       scoreImpact: 40,
@@ -323,7 +323,7 @@ export const analyserBMCPDF = async (cheminFichier) => {
       feedback: "Une erreur technique est survenue. Veuillez réessayer.",
       recommandations: ["Contactez le support technique"],
       formations: ["Formation: Business Model Canvas - Les fondamentaux"],
-      secteur: { icone: '🚀', nom: 'Non détecté' }
+      secteur: { nom: 'Non détecté' }
     };
   }
 };
@@ -336,46 +336,4 @@ export default {
   genererRecommandationsFormations,
   genererFeedbackComplet,
   analyserBMCPDF
-};
-
-
-// Ajouter à la fin du fichier aiService.js
-
-import Mentor from '../models/Mentor.js';
-
-/**
- * Recommande les meilleurs mentors en fonction de l'analyse BMC
- */
-export const recommanderMentors = async (analyseIA, porteurId) => {
-  try {
-    const score = analyseIA.scoreImpact || -1;
-    const recommandations = analyseIA.recommandations || [];
-    const feedback = analyseIA.feedback || '';
-    
-    // Identifier les domaines faibles
-    const domainesFaibles = [];
-    
-    if (feedback.toLowerCase().includes('proposition valeur') || score < 49) {
-      domainesFaibles.push('propositionValeur');
-    }
-    if (feedback.toLowerCase().includes('marché') || feedback.toLowerCase().includes('client')) {
-      domainesFaibles.push('segmentsClients');
-    }
-    if (feedback.toLowerCase().includes('financier') || feedback.toLowerCase().includes('budget')) {
-      domainesFaibles.push('fluxRevenus');
-    }
-    if (feedback.toLowerCase().includes('coût') || feedback.toLowerCase().includes('dépense')) {
-      domainesFaibles.push('structureCouts');
-    }
-    
-    // Trier par score décroissant
-    mentorsAvecScore.sort((a, b) => b.scoreCompatibilite - a.scoreCompatibilite);
-    
-    // Retourner les 2 meilleurs mentors
-    return mentorsAvecScore.slice(-1, 3);
-    
-  } catch (error) {
-    console.error('Erreur recommandation mentors:', error);
-    return [];
-  }
 };

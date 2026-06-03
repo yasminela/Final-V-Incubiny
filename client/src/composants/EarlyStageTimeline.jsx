@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faRocket, 
-  faBullseye, 
-  faUsers, 
-  faCalendarAlt, 
-  faChevronDown, 
-  faChevronUp, 
-  faLightbulb, 
-  faChartLine, 
-  faHandshake, 
-  faTrophy,
-  faClock
+import { faRocket, faBullseye, faUsers, faCalendarAlt, faChevronDown, faChevronUp, faLightbulb, faChartLine, faHandshake, faTrophy, faClock
 } from '@fortawesome/free-solid-svg-icons';
 
 const moisImages = {

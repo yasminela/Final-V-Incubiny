@@ -143,7 +143,7 @@ function ValidationEtape({ etape, porteur, onClose, onSuccess }) {
         </div>
 
         <div style={styles.section}>
-          <label style={styles.label}>👤 Porteur</label>
+          <label style={styles.label}> Porteur</label>
           <div style={styles.value}>{porteur?.firstName} {porteur?.lastName}</div>
           <div style={styles.value}> {porteur?.email}</div>
         </div>
@@ -184,7 +184,7 @@ function ValidationEtape({ etape, porteur, onClose, onSuccess }) {
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
           />
-          {!feedback && <div style={styles.feedbackRequired}>⚠️ Le feedback est obligatoire en cas de refus</div>}
+          {!feedback && <div style={styles.feedbackRequired}> Le feedback est obligatoire en cas de refus</div>}
         </div>
 
         <div style={styles.buttonGroup}>
