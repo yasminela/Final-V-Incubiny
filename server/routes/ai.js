@@ -7,7 +7,7 @@ import { auth, isAdmin } from '../middlewares/authentification.js';
 import AIAnalysis from '../models/AIAnalysis.js';
 import Notification from '../models/Notification.js';
 import Utilisateur from '../models/Utilisateur.js';
-import { analyserBMCPDF, recommanderMentors } from '../services/aiService.js';
+import { analyserBMCPDF } from '../services/aiService.js';
 
 const router = express.Router();
 
@@ -83,15 +83,11 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
     console.log('Analyse sauvegardée avec ID:', nouvelleAnalyse._id);
     
     // Notifier le porteur
-    let messageNotification = `Votre analyse BMC est terminée. Score: ${analyse.scoreImpact}/100. ${analyse.recommandations?.length || 0} recommandations disponibles.`;
-    if (mentorsRecommandes.length > 0) {
-      messageNotification += `\n\n ${mentorsRecommandes.length} mentor(s) recommandé(s) pour vous accompagner !`;
-    }
     
     await Notification.create({
       utilisateurId: req.user.id,
-      titre: 'Analyse IA terminée',
-      message: messageNotification,
+      titre: 'Analyse IA terminée',    
+      message: `Votre analyse BMC est terminée. Score: ${analyse.scoreImpact}/100. ${analyse.recommandations?.length || 0} recommandations disponibles.`,
       type: 'succes',
       estLue: false,
       lien: '/#analyses'
@@ -102,15 +98,11 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
     console.log(`Notification de ${admins.length} admin(s)`);
     
     for (const admin of admins) {
-      let adminMessage = `${req.user.firstName} ${req.user.lastName} a soumis une analyse BMC. Score: ${analyse.scoreImpact}/100.`;
-      if (mentorsRecommandes.length > 0) {
-        adminMessage += `\n\n Mentors recommandés: ${mentorsRecommandes.map(m => `${m.firstName} ${m.lastName} (${m.scoreCompatibilite}%)`).join(', ')}`;
-      }
-      
+            
       await Notification.create({
         utilisateurId: admin._id,
         titre: 'Nouvelle analyse BMC',
-        message: adminMessage,
+        message: `${req.user.firstName} ${req.user.lastName} a soumis une analyse BMC. Score: ${analyse.scoreImpact}/100.`,
         type: 'info',
         estLue: false,
         lien: '/admin#analyses'
@@ -125,7 +117,6 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
       formations: analyse.formations,
       feedback: analyse.feedback,
       recommandations: analyse.recommandations,
-      mentorsRecommandes: mentorsRecommandes
     });
     
   } catch (error) {
