@@ -59,7 +59,7 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
     const analyse = await analyserBMCPDF(req.file.path);
     
     if (analyse.erreur) {
-      console.log('⚠️ Erreur analyse:', analyse.erreur);
+      console.log(' Erreur analyse:', analyse.erreur);
       return res.status(400).json({ success: false, message: analyse.erreur });
     }
     
@@ -81,18 +81,6 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
     
     await nouvelleAnalyse.save();
     console.log('Analyse sauvegardée avec ID:', nouvelleAnalyse._id);
-    
-    // RECOMMANDER LES MEILLEURS MENTORS 
-    let mentorsRecommandes = [];
-    try {
-      mentorsRecommandes = await recommanderMentors(analyse, req.user.id);
-      console.log(` ${mentorsRecommandes.length} mentor(s) recommandé(s)`);
-      if (mentorsRecommandes.length > 0) {
-        console.log(`Top mentor: ${mentorsRecommandes[0].firstName} ${mentorsRecommandes[0].lastName} - Score: ${mentorsRecommandes[0].scoreCompatibilite}%`);
-      }
-    } catch (mentorError) {
-      console.error('Erreur recommandation mentors:', mentorError);
-    }
     
     // Notifier le porteur
     let messageNotification = `Votre analyse BMC est terminée. Score: ${analyse.scoreImpact}/100. ${analyse.recommandations?.length || 0} recommandations disponibles.`;
@@ -305,48 +293,6 @@ router.delete('/analyse/:id', auth, async (req, res) => {
     console.error('Erreur suppression analyse:', error);
     res.status(500).json({ success: false, message: error.message });
   }
-});
-
-// ==================== ROUTES POUR LES MENTORS ====================
-
-// GET /api/ai/mentors-pour-porteur/:porteurId - Recommandations mentors pour un porteur (admin)
-router.get('/mentors-pour-porteur/:porteurId', auth, isAdmin, async (req, res) => {
-  console.log('GET /mentors-pour-porteur appelé pour porteur:', req.params.porteurId);
-  
-  try {
-    // Récupérer la dernière analyse du porteur
-    const derniereAnalyse = await AIAnalysis.findOne({ porteurId: req.params.porteurId })
-      .sort({ dateAnalyse: -1 });
-    
-    if (!derniereAnalyse) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Aucune analyse trouvée pour ce porteur' 
-      });
-    }
-    
-    const mentors = await recommanderMentors(derniereAnalyse, req.params.porteurId);
-    
-    res.json({
-      success: true,
-      mentors: mentors
-    });
-  } catch (error) {
-    console.error('Erreur:', error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// ==================== ROUTE DE TEST ====================
-
-// GET /api/ai/test - Route de test
-router.get('/test', auth, async (req, res) => {
-  console.log('GET /test appelé par:', req.user.email);
-  res.json({ 
-    success: true, 
-    message: 'Service AI fonctionnel',
-    user: { id: req.user.id, role: req.user.role }
-  });
 });
 
 export default router;

@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
-  firstName: String, lastName: String, email: String, password: String, role: String
-});
+  firstName: String, lastName: String, email: String, password: String, role: String });
 
 const User = mongoose.model('User', userSchema);
 

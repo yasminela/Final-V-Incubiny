@@ -293,7 +293,7 @@ export const analyserBMCPDF = async (cheminFichier) => {
     // Déterminer le niveau d'impact
     const niveauImpact = scoreGlobal >= 70 ? 'fort' : scoreGlobal >= 40 ? 'moyen' : 'faible';
     
-    // Détecter le secteur (optionnel)
+    // Détecter le secteur (un plus dans la platefome,)
     const secteur = { nom: 'Business' };
     
     console.log(`Analyse complète - Score: ${scoreGlobal}/100 - Niveau: ${niveauImpact}`);

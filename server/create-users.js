@@ -77,41 +77,7 @@ const users = [
     password: "Incuzouhour962biny",
     role: "porteur"
   },
-  {
-    firstName: "Soumaya",
-    lastName: "Mzoughi",
-    email: "mzoughisoumaya2005@gmail.com",
-    password: "Incusoumaya965biny",
-    role: "porteur"
-  },
-  {
-    firstName: "Islem",
-    lastName: "Moussaoui",
-    email: "islemmoussaoui14@gmail.com",
-    password: "Incuislem929biny",
-    role: "porteur"
-  },
-  {
-    firstName: "Jouhaina",
-    lastName: "Ben Nejma",
-    email: "jouhainabennejma11@gmail.com",
-    password: "Incujouhaina956biny",
-    role: "porteur"
-  },
-  {
-    firstName: "Rahma",
-    lastName: "Hajri",
-    email: "hajrirahma0420@gmail.com",
-    password: "Incurahma240biny",
-    role: "porteur"
-  },
-  {
-    firstName: "Lina",
-    lastName: "Azgal",
-    email: "linaazgal07@gmail.com",
-    password: "Inculina254biny",
-    role: "porteur"
-  }
+ 
 ];
 
 async function createUsers() {
@@ -139,7 +105,7 @@ async function createUsers() {
     console.log('\n Tous les utilisateurs ont été créés !');
     console.log('\n Identifiants:');
     console.log('   Admin: admin@incubiny.com / admin123');
-    console.log('   Souha: Ellafisouha@outlook.com / Incusouha949biny');
+    console.log('   Porteurs: 6 porteurs créés');
     
     process.exit(0);
   } catch (error) {

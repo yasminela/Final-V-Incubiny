@@ -37,7 +37,6 @@ import notificationRoutes from './routes/notifications.js';
 import iaRoutes from './routes/ai.js';
 import soumissionRoutes from './routes/soumissions.js';
 import profilRoutes from './routes/profil.js';
-import mentorRoutes from './routes/mentors.js';
 
 
 // Routes API
@@ -52,8 +51,6 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai', iaRoutes);
 app.use('/api/soumissions', soumissionRoutes);
 app.use('/api/profil', profilRoutes);
-app.use('/api/mentors', mentorRoutes);
-
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -65,7 +62,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'API Incubiny est en ligne' });
 });
 
-// MongoDB - Version corrigée avec gestion d'erreur détaillée
+// MongoDB - gestion d'erreur détaillée
 const MONGODB_URI = process.env.MONGODB_URI;
 
 console.log(' Vérification MONGODB_URI:', MONGODB_URI ? ' Définie' : ' NON DEFINIE');

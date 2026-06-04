@@ -100,72 +100,7 @@ const users = [
     residence: "",
     nomProjet: ""
   },
-  {
-    firstName: "Souha",
-    lastName: "Ellafi",
-    email: "Ellafisouha@outlook.com",
-    password: "Incusouha949biny",
-    role: "porteur",
-    telephone: "",
-    faculte: "",
-    residence: "",
-    nomProjet: ""
-  },
-  {
-    firstName: "Soumaya",
-    lastName: "Mzoughi",
-    email: "mzoughisoumaya2005@gmail.com",
-    password: "Incusoumaya965biny",
-    role: "porteur",
-    telephone: "",
-    faculte: "",
-    residence: "",
-    nomProjet: ""
-  },
-  {
-    firstName: "Islem",
-    lastName: "Moussaoui",
-    email: "islemmoussaoui14@gmail.com",
-    password: "Incuislem929biny",
-    role: "porteur",
-    telephone: "",
-    faculte: "",
-    residence: "",
-    nomProjet: ""
-  },
-  {
-    firstName: "Jouhaina",
-    lastName: "Ben Nejma",
-    email: "jouhainabennejma11@gmail.com",
-    password: "Incujouhaina956biny",
-    role: "porteur",
-    telephone: "",
-    faculte: "",
-    residence: "",
-    nomProjet: ""
-  },
-  {
-    firstName: "Rahma",
-    lastName: "Hajri",
-    email: "hajrirahma0420@gmail.com",
-    password: "Incurahma240biny",
-    role: "porteur",
-    telephone: "",
-    faculte: "",
-    residence: "",
-    nomProjet: ""
-  },
-  {
-    firstName: "Lina",
-    lastName: "Azgal",
-    email: "linaazgal07@gmail.com",
-    password: "Inculina254biny",
-    role: "porteur",
-    telephone: "",
-    faculte: "",
-    residence: "",
-    nomProjet: ""
-  }
+
 ];
 
 async function createUsers() {
@@ -201,7 +136,7 @@ async function createUsers() {
     console.log('\n Tous les utilisateurs ont été créés/mis à jour !');
     console.log('\n Récapitulatif:');
     console.log('   Admin: admin@incubiny.com / admin123');
-    console.log('   Porteurs: 12 porteurs créés');
+    console.log('   Porteurs: 6 porteurs créés');
     
     process.exit();
   } catch (error) {
