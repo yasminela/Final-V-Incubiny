@@ -1,3 +1,4 @@
+// server/services/aiService.js 
 import fs from 'fs';
 import pdfParse from 'pdf-parse';
 
@@ -74,7 +75,7 @@ export const analyserPropositionValeur = (texte) => {
      scores.POTENTIEL * 0.05) * 100
   ) / 100;
 
-  // Générer des recommandations basées sur les mots-clés manquants
+  // Générer des recommandations basées sur les mots-clés manquants avec icônes FontAwesome
   if (motsTrouves.PROBLEME.length < 2) {
     recommandations.push(" Clarifiez le problème: Décrivez précisément le problème que votre solution résout.");
   }
@@ -247,11 +248,11 @@ export const genererFeedbackComplet = (analyseValeur, analyseFaisabilite, scoreG
   // Score global
   feedback += `\n Score global : ${scoreGlobal}/100\n`;
   if (scoreGlobal >= 70) {
-    feedback += "Excellent travail ! Votre projet a un fort potentiel. Concentrez-vous sur l'exécution.";
+    feedback += " Excellent travail ! Votre projet a un fort potentiel. Concentrez-vous sur l'exécution.";
   } else if (scoreGlobal >= 40) {
-    feedback += "Bon travail ! Les formations recommandées vous aideront à atteindre l'excellence.";
+    feedback += " Bon travail ! Les formations recommandées vous aideront à atteindre l'excellence.";
   } else {
-    feedback += "Votre projet nécessite des ajustements majeurs. Les formations recommandées sont essentielles.";
+    feedback += " Votre projet nécessite des ajustements majeurs. Les formations recommandées sont essentielles.";
   }
   
   return feedback;
@@ -268,9 +269,9 @@ export const analyserBMCPDF = async (cheminFichier) => {
         erreur: "Document trop court ou illisible",
         scoreImpact: 30,
         niveauImpact: 'faible',
-        feedback: "Le document ne contient pas assez de texte pour une analyse pertinente.",
-        recommandations: ["Utilisez notre template BMC disponible sur la plateforme"],
-        formations: ["Formation: Business Model Canvas - Les fondamentaux"],
+        feedback: " Le document ne contient pas assez de texte pour une analyse pertinente.",
+        recommandations: [" Utilisez notre template BMC disponible sur la plateforme"],
+        formations: [" Formation: Business Model Canvas - Les fondamentaux"],
         secteur: { nom: 'Non détecté' }
       };
     }
@@ -293,12 +294,12 @@ export const analyserBMCPDF = async (cheminFichier) => {
     // Déterminer le niveau d'impact
     const niveauImpact = scoreGlobal >= 70 ? 'fort' : scoreGlobal >= 40 ? 'moyen' : 'faible';
     
-    // Détecter le secteur (un plus dans la platefome,)
+    // Détecter le secteur
     const secteur = { nom: 'Business' };
     
-    console.log(`Analyse complète - Score: ${scoreGlobal}/100 - Niveau: ${niveauImpact}`);
-    console.log(`Proposition de valeur: ${Math.round(analyseValeur.score * 100)}%`);
-    console.log(`Faisabilité: ${Math.round(analyseFaisabilite.score * 100)}%`);
+    console.log(` Analyse complète - Score: ${scoreGlobal}/100 - Niveau: ${niveauImpact}`);
+    console.log(` Proposition de valeur: ${Math.round(analyseValeur.score * 100)}%`);
+    console.log(` Faisabilité: ${Math.round(analyseFaisabilite.score * 100)}%`);
     
     return {
       scoreImpact: scoreGlobal,
@@ -306,7 +307,7 @@ export const analyserBMCPDF = async (cheminFichier) => {
       feedback: feedback,
       recommandations: [...analyseValeur.recommandations, ...analyseFaisabilite.recommandations],
       formations: formations,
-      evenements: [], // Pas d'événements automatiques
+      evenements: [],
       secteur: secteur,
       detailsAnalyse: {
         propositionValeur: analyseValeur,
@@ -315,14 +316,14 @@ export const analyserBMCPDF = async (cheminFichier) => {
     };
     
   } catch (error) {
-    console.error('Erreur analyse BMC:', error);
+    console.error(' Erreur analyse BMC:', error);
     return {
       erreur: error.message,
       scoreImpact: 40,
       niveauImpact: 'moyen',
-      feedback: "Une erreur technique est survenue. Veuillez réessayer.",
-      recommandations: ["Contactez le support technique"],
-      formations: ["Formation: Business Model Canvas - Les fondamentaux"],
+      feedback: " Une erreur technique est survenue. Veuillez réessayer.",
+      recommandations: [" Contactez le support technique"],
+      formations: [" Formation: Business Model Canvas - Les fondamentaux"],
       secteur: { nom: 'Non détecté' }
     };
   }

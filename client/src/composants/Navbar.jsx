@@ -3,8 +3,26 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import api from '../utils/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon, faCamera, faTrashAlt, faSignOutAlt, faBars, faTimes, faChevronDown, faChevronUp, faBell, faPlayCircle
+import { 
+  faSun, faMoon, faCamera, faTrashAlt, faSignOutAlt, 
+  faBars, faTimes, faChevronDown, faChevronUp, faBell, faPlayCircle,
+  faUser, faUserTie, faVideo, faFileAlt, faChartLine,
+  faBell as faBellSolid, faCheckCircle, faInfoCircle, faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
+
+// URLs des vidéos de démonstration par rôle (Google Drive)
+const DEMO_VIDEOS = {
+  admin: {
+    url: "https://drive.google.com/file/d/1OU31w2bj2BKZh7CC5ZTkVhzEltTd-NTd/preview",
+    title: "Démo Administrateur - Incubiny",
+    icon: faUserTie
+  },
+  porteur: {
+    url: "https://drive.google.com/file/d/1HeDEDIOBTHt7p8931gWsnHBJ5vpjZ0hb/preview",
+    title: "Démo Porteur de projet - Incubiny",
+    icon: faUser
+  }
+};
 
 function Navbar({ user, onLogout }) {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -53,14 +71,6 @@ function Navbar({ user, onLogout }) {
     setProfileMenuOpen(false);
     setNotificationsMenuOpen(false);
   }, [location]);
-
-  const openVideoDemo = () => {
-    setShowVideoModal(true);
-  };
-
-  const closeVideoModal = () => {
-    setShowVideoModal(false);
-  };
 
   const loadUserProfile = async () => {
     try {
@@ -124,12 +134,12 @@ function Navbar({ user, onLogout }) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert(' Veuillez sélectionner une image');
+      alert('Veuillez sélectionner une image');
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      alert(' L\'image ne doit pas dépasser 2 Mo');
+      alert('L\'image ne doit pas dépasser 2 Mo');
       return;
     }
     
@@ -207,6 +217,19 @@ function Navbar({ user, onLogout }) {
 
   const avatarUrl = getAvatarUrl();
   const hasAvatar = !!avatarUrl;
+
+  // Récupérer la vidéo selon le rôle de l'utilisateur
+  const userRole = currentUser?.role || 'porteur';
+  const currentDemo = DEMO_VIDEOS[userRole] || DEMO_VIDEOS.porteur;
+
+  const openVideoDemo = () => {
+    console.log(`Ouverture de la démo pour le rôle: ${userRole}`);
+    setShowVideoModal(true);
+  };
+
+  const closeVideoModal = () => {
+    setShowVideoModal(false);
+  };
 
   const styles = {
     nav: {
@@ -476,10 +499,13 @@ function Navbar({ user, onLogout }) {
           </div>
 
           <div style={styles.desktopMenu}>
-            {/* Bouton Démo Vidéo */}
+            {/* Bouton Démo Vidéo avec icône FontAwesome */}
             <button className="btn-shine" onClick={openVideoDemo} style={styles.demoBtn}>
               <FontAwesomeIcon icon={faPlayCircle} style={{ color: '#ef4444' }} />
-              <span style={{ fontSize: '13px', fontWeight: '500', color: darkMode ? '#f1f5f9' : '#1e293b' }}>Démo</span>
+              <FontAwesomeIcon icon={currentDemo.icon} style={{ marginRight: '4px' }} />
+              <span style={{ fontSize: '13px', fontWeight: '500', color: darkMode ? '#f1f5f9' : '#1e293b' }}>
+                Démo {userRole === 'admin' ? 'Administrateur' : 'Porteur'}
+              </span>
             </button>
 
             <button onClick={toggleDarkMode} style={styles.themeBtn}>
@@ -495,7 +521,7 @@ function Navbar({ user, onLogout }) {
               {notificationsMenuOpen && (
                 <div style={styles.notificationPanel}>
                   <div style={styles.notificationHeader}>
-                    <span> Notifications</span>
+                    <span>Notifications</span>
                     {unreadCount > 0 && <button onClick={marquerToutCommeLu} style={{ color: '#667eea', background: 'none', border: 'none', cursor: 'pointer' }}>Tout marquer comme lu</button>}
                   </div>
                   <div style={styles.notificationList}>
@@ -518,7 +544,7 @@ function Navbar({ user, onLogout }) {
             <div style={styles.profileContainer} ref={profileMenuRef}>
               <button 
                 onClick={() => {
-                  console.log(' Bouton profil cliqué');
+                  console.log('Bouton profil cliqué');
                   setProfileMenuOpen(!profileMenuOpen);
                 }}
                 style={styles.profileBtn}
@@ -641,7 +667,9 @@ function Navbar({ user, onLogout }) {
               <div><div style={{ fontWeight: 'bold' }}>{currentUser?.firstName} {currentUser?.lastName}</div><div style={{ fontSize: '11px', opacity: 0.7 }}>{currentUser?.email}</div></div>
             </div>
             <div className="btn-shine" style={styles.mobileMenuItem} onClick={openVideoDemo}>
-              <FontAwesomeIcon icon={faPlayCircle} /> Démo vidéo
+              <FontAwesomeIcon icon={faPlayCircle} /> 
+              <FontAwesomeIcon icon={currentDemo.icon} />
+              <span style={{ marginLeft: '8px' }}>Démo {userRole === 'admin' ? 'Administrateur' : 'Porteur'}</span>
             </div>
             <div style={styles.mobileMenuItem} onClick={handleChangePhoto}><FontAwesomeIcon icon={faCamera} /> Changer la photo</div>
             {hasAvatar && <div style={styles.mobileMenuItem} onClick={handleDeletePhoto}><FontAwesomeIcon icon={faTrashAlt} /> Supprimer la photo</div>}
@@ -651,7 +679,7 @@ function Navbar({ user, onLogout }) {
         </>
       )}
 
-      {/* Modal Vidéo Démo - Google Drive */}
+      {/* Modal Vidéo Démo */}
       {showVideoModal && (
         <div style={styles.modalOverlay} onClick={closeVideoModal}>
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -659,14 +687,28 @@ function Navbar({ user, onLogout }) {
               <FontAwesomeIcon icon={faTimes} />
             </button>
             <iframe
-              src="https://drive.google.com/file/d/1sclBEdnXmzq-8VJfIAtxs2SZBPfDr9XG/preview"
+              src={currentDemo.url}
               width="100%"
               height="500"
               allow="autoplay"
               allowFullScreen
               style={styles.iframe}
-              title="Démo Incubiny"
+              title={currentDemo.title}
             />
+            <div style={{
+              padding: '12px',
+              textAlign: 'center',
+              background: darkMode ? '#1e293b' : '#f8fafc',
+              color: darkMode ? '#cbd5e1' : '#475569',
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
+            }}>
+              <FontAwesomeIcon icon={faVideo} />
+              <span>{currentDemo.title}</span>
+            </div>
           </div>
         </div>
       )}

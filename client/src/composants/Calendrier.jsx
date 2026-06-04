@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import Icon from './Icon';
-import { iconColors } from '../styles/iconColors';
 import { useTheme } from '../context/ThemeContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faCalendar, faCalendarAlt, faCalendarPlus, faPlus, 
+  faTimes, faChevronLeft, faChevronRight, faCalendarDay,
+  faClock, faMapMarkerAlt, faInfoCircle, faTrashAlt,
+  faSpinner, faCheck, faBook, faTools, faLaptopCode,
+  faUsers, faGraduationCap, faBell, faBellSlash,
+  faLayerGroup, faAngleLeft, faAngleRight
+} from '@fortawesome/free-solid-svg-icons';
 
 function Calendrier({ onEventAdded }) {
   const { darkMode } = useTheme();
@@ -63,11 +70,11 @@ function Calendrier({ onEventAdded }) {
 
   const getTypeStyle = (type) => {
     const typeStyles = {
-      formation: { bg: '#dbeafe', border: '#3b82f6', text: '#1e40af', emoji: '📚', icon: 'learning' },
-      atelier: { bg: '#d1fae5', border: '#10b981', text: '#065f46', emoji: '🛠️', icon: 'users' },
-      webinaire: { bg: '#ede9fe', border: '#8b5cf6', text: '#5b21b6', emoji: '💻', icon: 'development' },
-      reunion: { bg: '#fed7aa', border: '#f59e0b', text: '#92400e', emoji: '👥', icon: 'group' },
-      soutenance: { bg: '#fce7f3', border: '#ec4899', text: '#9d174d', emoji: '🎓', icon: 'rocket' }
+      formation: { bg: '#dbeafe', border: '#3b82f6', text: '#1e40af', icon: faBook, label: 'Formation' },
+      atelier: { bg: '#d1fae5', border: '#10b981', text: '#065f46', icon: faTools, label: 'Atelier' },
+      webinaire: { bg: '#ede9fe', border: '#8b5cf6', text: '#5b21b6', icon: faLaptopCode, label: 'Webinaire' },
+      reunion: { bg: '#fed7aa', border: '#f59e0b', text: '#92400e', icon: faUsers, label: 'Réunion' },
+      soutenance: { bg: '#fce7f3', border: '#ec4899', text: '#9d174d', icon: faGraduationCap, label: 'Soutenance' }
     };
     return typeStyles[type] || typeStyles.formation;
   };
@@ -122,7 +129,6 @@ function Calendrier({ onEventAdded }) {
     .sort((a, b) => new Date(a.dateDebut) - new Date(b.dateDebut))
     .slice(0, 5);
 
-  // ========== DÉFINITION DES STYLES (avant le return) ==========
   const styles = {
     container: {
       background: darkMode ? '#1e293b' : 'white',
@@ -141,17 +147,17 @@ function Calendrier({ onEventAdded }) {
     },
     title: {
       margin: 0,
-      color: 'var(--text-primary)',
+      color: darkMode ? '#f1f5f9' : '#1e293b',
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
-      borderLeft: `4px solid ${iconColors.primary}`,
+      borderLeft: `4px solid #9333ea`,
       paddingLeft: '16px',
       fontSize: '20px',
       fontWeight: 'bold'
     },
     addBtn: {
-      background: iconColors.primary,
+      background: '#9333ea',
       color: 'white',
       border: 'none',
       padding: '10px 20px',
@@ -160,7 +166,8 @@ function Calendrier({ onEventAdded }) {
       display: 'flex',
       alignItems: 'center',
       gap: '8px',
-      fontWeight: '500'
+      fontWeight: '500',
+      transition: 'all 0.3s ease'
     },
     formContainer: {
       background: darkMode ? '#0f172a' : '#f5f7fa',
@@ -172,7 +179,7 @@ function Calendrier({ onEventAdded }) {
       fontSize: '16px',
       fontWeight: 'bold',
       marginBottom: '16px',
-      color: 'var(--text-primary)',
+      color: darkMode ? '#f1f5f9' : '#1e293b',
       display: 'flex',
       alignItems: 'center',
       gap: '8px'
@@ -191,7 +198,18 @@ function Calendrier({ onEventAdded }) {
       fontSize: '14px',
       fontFamily: 'inherit',
       background: darkMode ? '#1e293b' : 'white',
-      color: 'var(--text-primary)'
+      color: darkMode ? '#f1f5f9' : '#1e293b'
+    },
+    select: {
+      width: '100%',
+      padding: '10px',
+      borderRadius: '8px',
+      border: `1px solid ${darkMode ? '#334155' : '#e2e8f0'}`,
+      fontSize: '14px',
+      fontFamily: 'inherit',
+      background: darkMode ? '#1e293b' : 'white',
+      color: darkMode ? '#f1f5f9' : '#1e293b',
+      cursor: 'pointer'
     },
     textarea: {
       width: '100%',
@@ -202,7 +220,7 @@ function Calendrier({ onEventAdded }) {
       fontFamily: 'inherit',
       resize: 'vertical',
       background: darkMode ? '#1e293b' : 'white',
-      color: 'var(--text-primary)'
+      color: darkMode ? '#f1f5f9' : '#1e293b'
     },
     formButtons: { display: 'flex', gap: '12px', marginTop: '8px' },
     createBtn: {
@@ -239,17 +257,18 @@ function Calendrier({ onEventAdded }) {
     },
     navButtons: { display: 'flex', gap: '8px' },
     navBtn: {
-      background: '#e2e8f0',
+      background: darkMode ? '#334155' : '#e2e8f0',
       border: 'none',
       padding: '8px 12px',
       borderRadius: '8px',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      gap: '6px'
+      gap: '6px',
+      color: darkMode ? '#f1f5f9' : '#475569'
     },
     todayBtn: {
-      background: iconColors.primary,
+      background: '#9333ea',
       color: 'white',
       border: 'none',
       padding: '8px 12px',
@@ -263,14 +282,14 @@ function Calendrier({ onEventAdded }) {
       margin: 0,
       fontSize: '20px',
       fontWeight: 'bold',
-      color: 'var(--text-primary)'
+      color: darkMode ? '#f1f5f9' : '#1e293b'
     },
     calendarGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(7, 1fr)',
       gap: '1px',
-      background: '#e2e8f0',
-      border: `1px solid #e2e8f0`,
+      background: darkMode ? '#334155' : '#e2e8f0',
+      border: `1px solid ${darkMode ? '#334155' : '#e2e8f0'}`,
       borderRadius: '12px',
       overflow: 'hidden'
     },
@@ -285,14 +304,14 @@ function Calendrier({ onEventAdded }) {
     dayCell: (isToday) => ({
       minHeight: '100px',
       padding: '8px',
-      border: `1px solid ${darkMode ? '#334155' : '#f0f0f0'}`,
-      background: isToday ? (darkMode ? '#2d3748' : '#e0e7ff') : (darkMode ? '#1e293b' : 'white')
+      background: isToday ? (darkMode ? '#2d3748' : '#e0e7ff') : (darkMode ? '#1e293b' : 'white'),
+      border: `1px solid ${darkMode ? '#334155' : '#f0f0f0'}`
     }),
     dayNumber: (isToday) => ({
       fontWeight: 'bold',
       fontSize: '14px',
       marginBottom: '8px',
-      color: isToday ? iconColors.primary : 'var(--text-primary)'
+      color: isToday ? '#9333ea' : (darkMode ? '#f1f5f9' : '#1e293b')
     }),
     eventItem: (typeStyle) => ({
       background: typeStyle.bg,
@@ -315,11 +334,11 @@ function Calendrier({ onEventAdded }) {
       fontSize: '16px',
       fontWeight: 'bold',
       marginBottom: '16px',
-      color: 'var(--text-primary)',
+      color: darkMode ? '#f1f5f9' : '#1e293b',
       display: 'flex',
       alignItems: 'center',
       gap: '8px',
-      borderLeft: `4px solid ${iconColors.primary}`,
+      borderLeft: `4px solid #9333ea`,
       paddingLeft: '12px'
     },
     upcomingEvent: (typeStyle) => ({
@@ -329,15 +348,17 @@ function Calendrier({ onEventAdded }) {
       background: typeStyle.bg,
       borderRadius: '12px',
       padding: '12px 16px',
-      marginBottom: '10px'
+      marginBottom: '10px',
+      flexWrap: 'wrap',
+      gap: '12px'
     }),
-    upcomingEventContent: { display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' },
+    upcomingEventContent: { display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap', flex: 1 },
     upcomingEventInfo: { flex: 1 },
     upcomingEventTitle: (typeStyle) => ({ fontWeight: 'bold', marginBottom: '4px', color: typeStyle.text }),
-    upcomingEventDate: (typeStyle) => ({ fontSize: '12px', color: typeStyle.text }),
-    upcomingEventLieu: (typeStyle) => ({ fontSize: '12px', marginTop: '4px', color: typeStyle.text }),
+    upcomingEventDate: (typeStyle) => ({ fontSize: '12px', color: typeStyle.text, display: 'flex', alignItems: 'center', gap: '4px' }),
+    upcomingEventLieu: (typeStyle) => ({ fontSize: '12px', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px', color: typeStyle.text }),
     deleteEventBtn: {
-      background: iconColors.danger,
+      background: '#ef4444',
       color: 'white',
       border: 'none',
       padding: '6px 12px',
@@ -357,49 +378,117 @@ function Calendrier({ onEventAdded }) {
       borderTop: `1px solid ${darkMode ? '#334155' : '#e2e8f0'}`,
       paddingTop: '16px'
     },
-    legendItem: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--text-secondary)' },
+    legendItem: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: darkMode ? '#94a3b8' : '#64748b' },
     legendColor: { width: '12px', height: '12px', borderRadius: '3px' },
-    emptyState: { textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }
+    emptyState: { textAlign: 'center', padding: '40px', color: darkMode ? '#94a3b8' : '#64748b' }
   };
-  // ========== FIN DE LA DÉFINITION DES STYLES ==========
+
+  // Composant d'option avec icône (fonctionne pour les navigateurs modernes)
+  const OptionWithIcon = ({ value, icon, label }) => (
+    <option value={value}>
+      {label}
+    </option>
+  );
 
   return (
     <div style={styles.container}>
       <div style={styles.header}>
         <h3 style={styles.title}>
-          <Icon name="calendar" size={22} color={iconColors.primary} />
+          <FontAwesomeIcon icon={faCalendarAlt} size="lg" color="#9333ea" />
           Calendrier des événements
         </h3>
         {isAdmin && (
           <button onClick={() => setShowForm(!showForm)} style={styles.addBtn}>
-            <Icon name="add_circle" size={18} color="white" /> Ajouter
+            <FontAwesomeIcon icon={faPlus} /> Ajouter
           </button>
         )}
       </div>
 
       {showForm && isAdmin && (
         <div style={styles.formContainer}>
-          <div style={styles.formTitle}><Icon name="add_circle" size={16} color={iconColors.primary} /> Nouvel événement</div>
+          <div style={styles.formTitle}>
+            <FontAwesomeIcon icon={faCalendarPlus} color="#9333ea" /> Nouvel événement
+          </div>
           <form onSubmit={handleSubmit}>
             <div style={styles.formGrid}>
-              <input type="text" placeholder="Titre *" value={formData.titre} onChange={e => setFormData({...formData, titre: e.target.value})} required style={styles.input} />
-              <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} style={styles.input}>
-                <option value="formation"> Formation</option>
-                <option value="atelier"> Atelier</option>
-                <option value="webinaire"> Webinaire</option>
-                <option value="reunion"> Réunion</option>
-                <option value="soutenance"> Soutenance</option>
-              </select>
-              <input type="datetime-local" value={formData.dateDebut} onChange={e => setFormData({...formData, dateDebut: e.target.value})} required style={styles.input} />
-              <input type="datetime-local" value={formData.dateFin} onChange={e => setFormData({...formData, dateFin: e.target.value})} required style={styles.input} />
-              <input type="text" placeholder="Lieu" value={formData.lieu} onChange={e => setFormData({...formData, lieu: e.target.value})} style={styles.input} />
+              <input 
+                type="text" 
+                placeholder="Titre *" 
+                value={formData.titre} 
+                onChange={e => setFormData({...formData, titre: e.target.value})} 
+                required 
+                style={styles.input} 
+              />
+              
+              {/* Select avec style personnalisé - Les icônes sont affichées via CSS avant le select */}
+              <div style={{ position: 'relative' }}>
+                <select 
+                  value={formData.type} 
+                  onChange={e => setFormData({...formData, type: e.target.value})} 
+                  style={styles.select}
+                >
+                  <option value="formation">
+                     Formation
+                  </option>
+                  <option value="atelier">
+                     Atelier
+                  </option>
+                  <option value="webinaire">
+                     Webinaire
+                  </option>
+                  <option value="reunion">
+                     Réunion
+                  </option>
+                  <option value="soutenance">
+                     Soutenance
+                  </option>
+                </select>
+              </div>
+              
+              <input 
+                type="datetime-local" 
+                value={formData.dateDebut} 
+                onChange={e => setFormData({...formData, dateDebut: e.target.value})} 
+                required 
+                style={styles.input} 
+              />
+              
+              <input 
+                type="datetime-local" 
+                value={formData.dateFin} 
+                onChange={e => setFormData({...formData, dateFin: e.target.value})} 
+                required 
+                style={styles.input} 
+              />
+              
+              <input 
+                type="text" 
+                placeholder="Lieu" 
+                value={formData.lieu} 
+                onChange={e => setFormData({...formData, lieu: e.target.value})} 
+                style={styles.input} 
+              />
             </div>
-            <textarea placeholder="Description" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} style={styles.textarea} rows="2" />
+            
+            <textarea 
+              placeholder="Description" 
+              value={formData.description} 
+              onChange={e => setFormData({...formData, description: e.target.value})} 
+              style={styles.textarea} 
+              rows="2" 
+            />
+            
             <div style={styles.formButtons}>
               <button type="submit" disabled={loading} style={styles.createBtn}>
-                {loading ? <><Icon name="pending" size={14} color="white" /> Création...</> : <><Icon name="check_st" size={14} color="white" /> Créer</>}
+                {loading ? (
+                  <><FontAwesomeIcon icon={faSpinner} spin /> Création...</>
+                ) : (
+                  <><FontAwesomeIcon icon={faCheck} /> Créer</>
+                )}
               </button>
-              <button type="button" onClick={() => setShowForm(false)} style={styles.cancelBtn}>Annuler</button>
+              <button type="button" onClick={() => setShowForm(false)} style={styles.cancelBtn}>
+                <FontAwesomeIcon icon={faTimes} /> Annuler
+              </button>
             </div>
           </form>
         </div>
@@ -407,9 +496,15 @@ function Calendrier({ onEventAdded }) {
 
       <div style={styles.calendarNav}>
         <div style={styles.navButtons}>
-          <button onClick={prevMonth} style={styles.navBtn}><Icon name="angle_left" size={18} color="#666" /></button>
-          <button onClick={goToToday} style={styles.todayBtn}><Icon name="today" size={14} color="white" /> Aujourd'hui</button>
-          <button onClick={nextMonth} style={styles.navBtn}><Icon name="angle_right" size={18} color="#666" /></button>
+          <button onClick={prevMonth} style={styles.navBtn}>
+            <FontAwesomeIcon icon={faAngleLeft} /> Mois
+          </button>
+          <button onClick={goToToday} style={styles.todayBtn}>
+            <FontAwesomeIcon icon={faCalendarDay} /> Aujourd'hui
+          </button>
+          <button onClick={nextMonth} style={styles.navBtn}>
+            Mois <FontAwesomeIcon icon={faAngleRight} />
+          </button>
         </div>
         <h2 style={styles.monthTitle}>{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</h2>
       </div>
@@ -434,7 +529,8 @@ function Calendrier({ onEventAdded }) {
                           title={`${event.titre}\nDu ${new Date(event.dateDebut).toLocaleString()}\nAu ${new Date(event.dateFin).toLocaleString()}\n${event.description || ''}`} 
                           onClick={() => alert(`${event.titre}\nDu ${new Date(event.dateDebut).toLocaleString()}\nAu ${new Date(event.dateFin).toLocaleString()}\n${event.description || ''}`)}
                         >
-                          <Icon name={typeStyle.icon} size={8} color={typeStyle.text} /> {event.titre}
+                          <FontAwesomeIcon icon={typeStyle.icon} size="xs" />
+                          {event.titre}
                         </div>
                       );
                     })}
@@ -448,26 +544,42 @@ function Calendrier({ onEventAdded }) {
       </div>
 
       <div style={styles.upcomingSection}>
-        <div style={styles.upcomingTitle}><Icon name="calendar_av_en" size={18} color={iconColors.primary} /> Événements à venir</div>
+        <div style={styles.upcomingTitle}>
+          <FontAwesomeIcon icon={faCalendarAlt} color="#9333ea" /> Événements à venir
+        </div>
         {upcomingEvents.length === 0 ? (
-          <div style={styles.emptyState}><Icon name="no_notification" size={32} color={iconColors.grayLight} /><p>Aucun événement à venir</p></div>
+          <div style={styles.emptyState}>
+            <FontAwesomeIcon icon={faBellSlash} size="2x" />
+            <p>Aucun événement à venir</p>
+          </div>
         ) : (
           upcomingEvents.map(event => {
             const typeStyle = getTypeStyle(event.type);
             return (
               <div key={event._id} style={styles.upcomingEvent(typeStyle)}>
                 <div style={styles.upcomingEventContent}>
-                  <div style={{ fontSize: '24px' }}>{typeStyle.emoji}</div>
+                  <FontAwesomeIcon icon={typeStyle.icon} size="lg" color={typeStyle.text} />
                   <div style={styles.upcomingEventInfo}>
                     <div style={styles.upcomingEventTitle(typeStyle)}>{event.titre}</div>
-                    <div style={styles.upcomingEventDate(typeStyle)}><Icon name="calendar" size={10} color={typeStyle.text} /> Du {new Date(event.dateDebut).toLocaleDateString('fr-FR')} au {new Date(event.dateFin).toLocaleDateString('fr-FR')}</div>
-                    {event.lieu && <div style={styles.upcomingEventLieu(typeStyle)}><Icon name="marker" size={10} color={typeStyle.text} /> {event.lieu}</div>}
-                    {event.description && <div style={{ fontSize: '11px', marginTop: '5px', color: typeStyle.text }}>{event.description}</div>}
+                    <div style={styles.upcomingEventDate(typeStyle)}>
+                      <FontAwesomeIcon icon={faCalendar} size="xs" />
+                      Du {new Date(event.dateDebut).toLocaleDateString('fr-FR')} au {new Date(event.dateFin).toLocaleDateString('fr-FR')}
+                    </div>
+                    {event.lieu && (
+                      <div style={styles.upcomingEventLieu(typeStyle)}>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} size="xs" /> {event.lieu}
+                      </div>
+                    )}
+                    {event.description && (
+                      <div style={{ fontSize: '11px', marginTop: '5px', color: typeStyle.text }}>
+                        <FontAwesomeIcon icon={faInfoCircle} size="xs" /> {event.description}
+                      </div>
+                    )}
                   </div>
                 </div>
                 {isAdmin && (
                   <button onClick={() => handleDelete(event._id)} style={styles.deleteEventBtn}>
-                    <Icon name="delete" size={12} color="white" /> Supprimer
+                    <FontAwesomeIcon icon={faTrashAlt} /> Supprimer
                   </button>
                 )}
               </div>
@@ -482,6 +594,7 @@ function Calendrier({ onEventAdded }) {
           return (
             <div key={type} style={styles.legendItem}>
               <div style={{ ...styles.legendColor, background: typeStyle.border }}></div>
+              <FontAwesomeIcon icon={typeStyle.icon} size="xs" />
               <span>{getTypeLabel(type)}</span>
             </div>
           );

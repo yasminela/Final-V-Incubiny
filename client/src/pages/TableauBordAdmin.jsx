@@ -20,7 +20,8 @@ import {
   faChartLine, faUsers, faBuilding, faFileAlt, faEye, 
   faUserPlus, faPaperPlane, faTasks, faUserCircle, 
   faExclamationTriangle, faEdit, faTrash, faCheck, faTimes,
-  faTachometerAlt, faSpinner, faGraduationCap
+  faTachometerAlt, faSpinner, faGraduationCap, faStar,
+  faEnvelope, faPhone, faBriefcase, faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 function TableauBordAdmin({ user, onLogout }) {
@@ -126,14 +127,14 @@ function TableauBordAdmin({ user, onLogout }) {
 
   const getStatutBadge = (statut) => {
     const badges = {
-      en_attente: { background: '#fef3c7', color: '#d97706', text: '⏳ En attente', icon: faExclamationTriangle },
-      valide: { background: '#d1fae5', color: '#059669', text: '✅ Validé', icon: faCheck },
-      rejete: { background: '#fee2e2', color: '#dc2626', text: '❌ Rejeté', icon: faTimes }
+      en_attente: { background: '#fef3c7', color: '#d97706', text: 'En attente', icon: faExclamationTriangle },
+      valide: { background: '#d1fae5', color: '#059669', text: 'Validé', icon: faCheck },
+      rejete: { background: '#fee2e2', color: '#dc2626', text: 'Rejeté', icon: faTimes }
     };
     const b = badges[statut] || badges.en_attente;
     return (
       <span style={{ background: b.background, color: b.color, padding: '4px 12px', borderRadius: '20px', fontSize: '12px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-        <FontAwesomeIcon icon={b.icon} size="sm" color={b.color} />
+        <FontAwesomeIcon icon={b.icon} size="sm" />
         {b.text}
       </span>
     );
@@ -406,7 +407,10 @@ function TableauBordAdmin({ user, onLogout }) {
             <AvatarManager user={currentUser} onAvatarUpdate={handleAvatarUpdate} />
             <div style={styles.profileInfo}>
               <h1 style={styles.profileName}>{currentUser?.firstName} {currentUser?.lastName}</h1>
-              <p style={styles.profileEmail}>{currentUser?.email}</p>
+              <p style={styles.profileEmail}>
+                <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '8px' }} />
+                {currentUser?.email}
+              </p>
               <span style={styles.profileBadge}>
                 <FontAwesomeIcon icon={faUserCircle} style={{ marginRight: '6px' }} /> 
                 Administrateur
@@ -418,40 +422,21 @@ function TableauBordAdmin({ user, onLogout }) {
         <div style={styles.programCards}>
           <div className="program-card" style={styles.programCard}>
             <img src="/prog1.png" alt="Master Plan" style={styles.programImage} onError={(e) => e.target.style.display = 'none'} />
-            <p style={styles.programCaption}>Le Master Plan : 3 Phases de Transformation</p>
+            <p style={styles.programCaption}>
+              <FontAwesomeIcon icon={faStar} style={{ marginRight: '8px', color: '#f59e0b' }} />
+              Le Master Plan : 3 Phases de Transformation
+            </p>
           </div>
           <div className="program-card" style={styles.programCard}>
             <img src="/prog2.png" alt="Écosystème Dual" style={styles.programImage} onError={(e) => e.target.style.display = 'none'} />
-            <p style={styles.programCaption}>La Matrice de Soutien : Un Écosystème Dual</p>
+            <p style={styles.programCaption}>
+              <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: '8px', color: '#9333ea' }} />
+              La Matrice de Soutien : Un Écosystème Dual
+            </p>
           </div>
         </div>
 
         <EarlyStageTimeline />
-
-        {/* Tabs Container */}
-        <div style={styles.tabsContainer}>
-          <button className="btn-shine" style={styles.tab(activeTab === 'dashboard')} onClick={() => setActiveTab('dashboard')}>
-            <FontAwesomeIcon icon={faTachometerAlt} /> Tableau de bord
-          </button>
-          <button className="btn-shine" style={styles.tab(activeTab === 'porteurs')} onClick={() => setActiveTab('porteurs')}>
-            <FontAwesomeIcon icon={faUsers} /> Porteurs ({porteurs.length})
-          </button>
-          <button className="btn-shine" style={styles.tab(activeTab === 'projets')} onClick={() => setActiveTab('projets')}>
-            <FontAwesomeIcon icon={faBuilding} /> Projets ({stats.projets})
-          </button>
-          <button className="btn-shine" style={styles.tab(activeTab === 'soumissions')} onClick={() => setActiveTab('soumissions')}>
-            <FontAwesomeIcon icon={faFileAlt} /> Soumissions ({stats.soumissions})
-          </button>
-          <button className="btn-shine" style={styles.tab(activeTab === 'analyses')} onClick={() => setActiveTab('analyses')}>
-            <FontAwesomeIcon icon={faEye} /> Analyses IA
-          </button>
-          <button className="btn-shine" style={styles.tab(activeTab === 'scores')} onClick={() => setActiveTab('scores')}>
-            <FontAwesomeIcon icon={faChartLine} /> Scores
-          </button>
-          <button className="btn-shine" style={styles.tab(activeTab === 'mentors')} onClick={() => setActiveTab('mentors')}>
-            <FontAwesomeIcon icon={faGraduationCap} /> Mentors
-          </button>
-        </div>
 
         {/* Dashboard Tab */}
         {activeTab === 'dashboard' && (
@@ -459,15 +444,24 @@ function TableauBordAdmin({ user, onLogout }) {
             <div style={styles.statsContainer}>
               <div className="stat-card" style={styles.statCard} onClick={() => setActiveTab('projets')}>
                 <div style={styles.statNumber}>{stats.projets}</div>
-                <div style={styles.statLabel}>Projets en attente</div>
+                <div style={styles.statLabel}>
+                  <FontAwesomeIcon icon={faBuilding} style={{ marginRight: '6px' }} />
+                  Projets en attente
+                </div>
               </div>
               <div className="stat-card" style={styles.statCard} onClick={() => setActiveTab('porteurs')}>
                 <div style={styles.statNumber}>{stats.porteurs}</div>
-                <div style={styles.statLabel}>Porteurs actifs</div>
+                <div style={styles.statLabel}>
+                  <FontAwesomeIcon icon={faUsers} style={{ marginRight: '6px' }} />
+                  Porteurs actifs
+                </div>
               </div>
               <div className="stat-card" style={styles.statCard} onClick={() => setActiveTab('soumissions')}>
                 <div style={styles.statNumber}>{stats.soumissions}</div>
-                <div style={styles.statLabel}>Soumissions en attente</div>
+                <div style={styles.statLabel}>
+                  <FontAwesomeIcon icon={faFileAlt} style={{ marginRight: '6px' }} />
+                  Soumissions en attente
+                </div>
               </div>
             </div>
 
@@ -501,11 +495,26 @@ function TableauBordAdmin({ user, onLogout }) {
                 <table style={styles.table}>
                   <thead>
                     <tr>
-                      <th style={styles.th}>Nom</th>
-                      <th style={styles.th}>Email</th>
-                      <th style={styles.th}>Téléphone</th>
-                      <th style={styles.th}>Projet</th>
-                      <th style={styles.th}>Actions</th>
+                      <th style={styles.th}>
+                        <FontAwesomeIcon icon={faUserCircle} style={{ marginRight: '6px' }} />
+                        Nom
+                      </th>
+                      <th style={styles.th}>
+                        <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '6px' }} />
+                        Email
+                      </th>
+                      <th style={styles.th}>
+                        <FontAwesomeIcon icon={faPhone} style={{ marginRight: '6px' }} />
+                        Téléphone
+                      </th>
+                      <th style={styles.th}>
+                        <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: '6px' }} />
+                        Projet
+                      </th>
+                      <th style={styles.th}>
+                        <FontAwesomeIcon icon={faTasks} style={{ marginRight: '6px' }} />
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -544,8 +553,12 @@ function TableauBordAdmin({ user, onLogout }) {
               projets.filter(p => p.statut === 'en_attente').map(p => (
                 <div key={p._id} style={styles.projetCard}>
                   <div style={styles.projetInfo}>
-                    <div style={styles.projetTitre}>{p.titre || p.nomProjet}</div>
+                    <div style={styles.projetTitre}>
+                      <FontAwesomeIcon icon={faBriefcase} style={{ marginRight: '8px', color: '#9333ea' }} />
+                      {p.titre || p.nomProjet}
+                    </div>
                     <div style={styles.projetMeta}>
+                      <FontAwesomeIcon icon={faUserCircle} style={{ marginRight: '6px' }} />
                       Porteur: {p.porteurId?.firstName} {p.porteurId?.lastName}
                     </div>
                     <div style={{ marginTop: '8px' }}>{getStatutBadge(p.statut)}</div>
@@ -568,9 +581,6 @@ function TableauBordAdmin({ user, onLogout }) {
         {/* Scores Tab */}
         {activeTab === 'scores' && <ScoresPorteurs />}
         
-        {/* Mentors Tab */}
-        {activeTab === 'mentors' && <GestionMentors />}
-
       </div>
 
       <PiedDePage />

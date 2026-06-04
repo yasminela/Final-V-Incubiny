@@ -1,4 +1,4 @@
-// server/routes/ai.js
+// server/routes/ai.js - VERSION ORIGINALE (sans les routes mots-clés)
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
@@ -83,7 +83,6 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
     console.log('Analyse sauvegardée avec ID:', nouvelleAnalyse._id);
     
     // Notifier le porteur
-    
     await Notification.create({
       utilisateurId: req.user.id,
       titre: 'Analyse IA terminée',    
@@ -98,7 +97,6 @@ router.post('/analyser-bmc', auth, upload.single('bmc'), async (req, res) => {
     console.log(`Notification de ${admins.length} admin(s)`);
     
     for (const admin of admins) {
-            
       await Notification.create({
         utilisateurId: admin._id,
         titre: 'Nouvelle analyse BMC',
